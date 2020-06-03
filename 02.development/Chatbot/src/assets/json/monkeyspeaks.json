@@ -1,0 +1,125 @@
+{
+    "cycle": [
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "title" : "I'll help you calm down",
+                    "monkeyText" : "Whick option looks like more attractive?"
+                },
+                {
+                    "id" : 2,
+                    "title" : "...and again",
+                    "monkeyText" : "Whick option looks like more attractive?"
+                },
+                {
+                    "id" : 3,
+                    "title" : "...once more",
+                    "monkeyText" : "Whick option looks like more attractive?"
+                },
+                {
+                    "id" : 4,
+                    "title" : "...last time",
+                    "monkeyText" : "Whick option looks like more attractive?"
+                }
+            ]
+        },
+
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "title" : "Now I'll help you releax",
+                    "monkeyText" : "Which feels more doable?"
+                },
+                {
+                    "id" : 2,
+                    "title" : "...and again",
+                    "monkeyText" : "Which feels more doable?"
+                },
+                {
+                    "id" : 3,
+                    "title" : "...once more",
+                    "monkeyText" : "Which feels more doable?"
+                },
+                {
+                    "id" : 4,
+                    "title" : "...last time",
+                    "monkeyText" : "Which feels more doable?"
+                }
+            ]
+        },
+
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "title" : "I'll help you see what is okay in the present",
+                    "monkeyText" : "Which speaks to you the most?"
+                },
+                {
+                    "id" : 2,
+                    "title" : "...and again",
+                    "monkeyText" : "Which speaks to you the most?"
+                },
+                {
+                    "id" : 3,
+                    "title" : "...once more",
+                    "monkeyText" : "Which speaks to you the most?"
+                },
+                {
+                    "id" : 4,
+                    "title" : "...last time",
+                    "monkeyText" : "Which speaks to you the most?"
+                }
+            ]
+        },
+
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "title" : "I'll show you how alright things really are",
+                    "monkeyText" : "Which seems more appropriate?"
+                },
+                {
+                    "id" : 2,
+                    "title" : "...and again",
+                    "monkeyText" : "Which seems more appropriate?"
+                },
+                {
+                    "id" : 3,
+                    "title" : "...once more",
+                    "monkeyText" : "Which seems more appropriate?"
+                },
+                {
+                    "id" : 4,
+                    "title" : "...last time",
+                    "monkeyText" : "Which seems more appropriate?"
+                }
+            ]
+        }
+    ],
+    "sort": [
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "monkeyText" : "Here are your choices - pick which one feels easiest and drag it to the top"
+                },
+                {
+                    "id" : 2,
+                    "monkeyText" : "Choose which feels next easiest and drag it into the second position"
+                },
+                {
+                    "id" : 3,
+                    "monkeyText" : "Drag next easiest into the third position"
+                },
+                {
+                    "id" : 4,
+                    "monkeyText" : "Once you're satisfied with the order tap the arrow to proceed"
+                }
+            ]
+        }
+    ]
+}

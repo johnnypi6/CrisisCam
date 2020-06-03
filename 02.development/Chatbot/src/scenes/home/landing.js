@@ -1,0 +1,119 @@
+import React, { Component } from 'react'
+import {
+    StyleSheet,
+    View,
+    ImageBackground,
+    Text,
+    TouchableOpacity,
+    Button
+} from "react-native";
+import { Images } from 'res';
+
+export default class LandingScreen extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onBtnLaunchTapped = this.onBtnLaunchTapped.bind(this);
+    }
+
+    onBtnLaunchTapped() {
+        this.props.navigation.push("Chat")
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <ImageBackground source={ Images.introBackground } style={styles.image}>
+                    <View style = {styles.viewUpper}></View>
+                    <View style = {styles.viewLower}>
+                        <View style = {styles.viewIntro}>
+                            <Text style = {styles.txtIntro}>
+                                Let's{"\n"} calm down
+                            </Text>
+                        </View>
+                        <View style = {styles.viewButton}>
+                            <TouchableOpacity style = {styles.wrapLaunch} onPress = { this.onBtnLaunchTapped }>
+                                <Text style={styles.btnLaunch}>LAUNCH</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style = {styles.wrapCalibrate}>
+                                <Text style={styles.btnCalibrate}>CALIBRATE</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ImageBackground>
+                <View style = {styles.viewFooter}></View>
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: "column",
+        backgroundColor: "white"
+    },
+    image: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center"
+    },
+    viewUpper: {
+        flex: 1
+    },
+    viewLower: {
+        flex: 1,
+    },
+    viewFooter: {
+        height: 50,
+        backgroundColor: "white",
+        borderTopColor: "#eee",
+        borderTopWidth: 2
+    },
+    viewIntro: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        alignItems: "center",
+    },
+    viewButton: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        
+    },
+    txtIntro: {
+        fontSize: 36,
+        letterSpacing: 1.4,
+        textAlign: "center",
+        color: "#2E4484"
+    },
+    wrapLaunch: {
+        width: 225,
+        height: 50,
+    },
+    btnLaunch: {
+        width: 225,
+        height: 50,
+        backgroundColor: "#305CD2",
+        fontSize: 15,
+        color: "white",
+        textAlign: "center",
+        textAlignVertical: "center",
+        borderRadius: 25,
+        letterSpacing: 5,
+        shadowColor: '#070707', // IOS
+        shadowOffset: { width: -4, height: 4 }, // IOS
+        shadowOpacity: 1, // IOS
+        shadowRadius: 25, //IOS
+        elevation: 4, // Android
+    },
+    wrapCalibrate: {
+        marginTop: 16
+    },
+    btnCalibrate: {
+        color: "#305CD2",
+        letterSpacing: 5
+    },
+});
