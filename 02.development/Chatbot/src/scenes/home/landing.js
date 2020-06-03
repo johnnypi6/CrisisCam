@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: "#305CD2",
         borderRadius: 25,
-        letterSpacing: 5,
         shadowColor: '#070707', // IOS
         shadowOffset: { width: -4, height: 4 }, // IOS
         shadowOpacity: 1, // IOS
@@ -113,6 +112,7 @@ const styles = StyleSheet.create({
     btnLaunch: {
         fontSize: 15,
         color: "white",
+        letterSpacing: 5,
     },
     wrapCalibrate: {
         marginTop: 16
