@@ -33,7 +33,9 @@ export default class LandingScreen extends Component {
                         </View>
                         <View style = {styles.viewButton}>
                             <TouchableOpacity style = {styles.wrapLaunch} onPress = { this.onBtnLaunchTapped }>
-                                <Text style={styles.btnLaunch}>LAUNCH</Text>
+                                <View style = {styles.viewLaunch}>
+                                    <Text style={styles.btnLaunch}>LAUNCH</Text>
+                                </View>
                             </TouchableOpacity>
                             <TouchableOpacity style = {styles.wrapCalibrate}>
                                 <Text style={styles.btnCalibrate}>CALIBRATE</Text>
@@ -91,16 +93,15 @@ const styles = StyleSheet.create({
     },
     wrapLaunch: {
         width: 225,
-        height: 50,
+        height: 50
     },
-    btnLaunch: {
+    viewLaunch: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
         width: 225,
         height: 50,
         backgroundColor: "#305CD2",
-        fontSize: 15,
-        color: "white",
-        textAlign: "center",
-        textAlignVertical: "center",
         borderRadius: 25,
         letterSpacing: 5,
         shadowColor: '#070707', // IOS
@@ -108,6 +109,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 1, // IOS
         shadowRadius: 25, //IOS
         elevation: 4, // Android
+    },
+    btnLaunch: {
+        fontSize: 15,
+        color: "white",
     },
     wrapCalibrate: {
         marginTop: 16
