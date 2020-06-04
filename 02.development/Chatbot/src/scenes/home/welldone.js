@@ -12,27 +12,33 @@ export default class WellDoneScreen extends Component {
     constructor(props) {
         super(props);
 
-        this.onBtnLaunchTapped = this.onBtnLaunchTapped.bind(this);
+        this.onBtnLaunchTapped = this.onBtnBetterTapped.bind(this);
     }
 
-    onBtnLaunchTapped() {
-        this.props.navigation.push("Chat")
+    onBtnBetterTapped() {
+        
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <ImageBackground source={ Images.doneBackground } style={styles.background}>
-                    <View style = {styles.viewUpper}></View>
+                    <View style = {styles.viewUpper}>
+                        <Text style = {styles.txtWellDone}>Well done,{"\n"}Mark</Text>
+                        <Text style = {styles.txtDash}>—</Text>
+                        <Text style = {styles.txtWellDoneDesc}>
+                            You have achieved greater confidence and thus you can be more relaxed in this area of your life
+                        </Text>
+                    </View>
                     <View style = {styles.viewLower}>
                         <View style = {styles.viewButton}>
-                            <TouchableOpacity style = {styles.wrapLaunch} onPress = { this.onBtnLaunchTapped }>
-                                <View style = {styles.viewLaunch}>
-                                    <Text style={styles.btnLaunch}>LAUNCH</Text>
+                            <TouchableOpacity style = {styles.wrapBetter} onPress = { this.onBtnBetterTapped }>
+                                <View style = {styles.viewBetter}>
+                                    <Text style={styles.btnBetter}>FEELING BETTER</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style = {styles.wrapCalibrate}>
-                                <Text style={styles.btnCalibrate}>CALIBRATE</Text>
+                            <TouchableOpacity style = {styles.wrapNotGreat}>
+                                <Text style={styles.btnNotGreat}>STILL NOT GREAT</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -55,7 +61,11 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     viewUpper: {
-        flex: 4
+        flex: 4,
+        alignItems: "center",
+        paddingTop: 40,
+        paddingLeft: 40,
+        paddingRight: 40
     },
     viewLower: {
         flex: 1,
@@ -66,11 +76,21 @@ const styles = StyleSheet.create({
         borderTopColor: "#eee",
         borderTopWidth: 2
     },
-    viewIntro: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "flex-end",
-        alignItems: "center",
+    txtWellDone: {
+        color: "#2E54C5",
+        fontSize: 36,
+        lineHeight: 44,
+        textAlign: "center"
+    },
+    txtDash: {
+        color: "#2E54C5",
+        fontSize: 18
+    },      
+    txtWellDoneDesc: {
+        color: "#4C4C4C",
+        fontSize: 21,
+        lineHeight: 28,
+        textAlign: "center"
     },
     viewButton: {
         flex: 1,
@@ -79,17 +99,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         
     },
-    txtIntro: {
-        fontSize: 36,
-        letterSpacing: 1.4,
-        textAlign: "center",
-        color: "#2E4484"
-    },
-    wrapLaunch: {
+    wrapBetter: {
         width: 225,
         height: 50
     },
-    viewLaunch: {
+    viewBetter: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -103,16 +117,16 @@ const styles = StyleSheet.create({
         shadowRadius: 25, //IOS
         elevation: 4, // Android
     },
-    btnLaunch: {
+    btnBetter: {
         fontSize: 15,
         color: "white",
-        letterSpacing: 5,
+        letterSpacing: 3,
     },
-    wrapCalibrate: {
+    wrapNotGreat: {
         marginTop: 16
     },
-    btnCalibrate: {
+    btnNotGreat: {
         color: "#305CD2",
-        letterSpacing: 5
+        letterSpacing: 3
     },
 });
