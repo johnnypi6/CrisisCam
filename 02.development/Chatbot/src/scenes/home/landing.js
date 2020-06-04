@@ -4,8 +4,7 @@ import {
     View,
     ImageBackground,
     Text,
-    TouchableOpacity,
-    Button
+    TouchableOpacity
 } from "react-native";
 import { Images } from 'res';
 
@@ -23,7 +22,7 @@ export default class LandingScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ImageBackground source={ Images.introBackground } style={styles.image}>
+                <ImageBackground source={ Images.introBackground } style={styles.background}>
                     <View style = {styles.viewUpper}></View>
                     <View style = {styles.viewLower}>
                         <View style = {styles.viewIntro}>
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         backgroundColor: "white"
     },
-    image: {
+    background: {
         flex: 1,
         resizeMode: "cover",
         justifyContent: "center"
