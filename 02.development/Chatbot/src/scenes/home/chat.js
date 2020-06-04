@@ -275,10 +275,10 @@ export default class ChatScreen extends Component {
         return (
             <View style = {styles.container}>
                 <ChatHistory messageData = {messageData} waiting = {waiting} />
-                {
+                {/* {
                     this.getAnswerView()
-                }
-                {/* <Rate /> */}
+                } */}
+                <Rate />
                 <View style = {styles.viewFooter}>
                     <View style = {{flex: 1}}></View>
                     <View style = {{flex: 1}}></View>

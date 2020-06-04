@@ -2,11 +2,38 @@ import React, { Component } from 'react'
 import {
     StyleSheet,
     View,
-    Text
+    Text,
+    Image,
+    ImageBackground
 } from "react-native";
-import Slider from '@react-native-community/slider';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Images } from 'res';
+
+class CustomMarker extends Component {
+    render() {
+        return (
+            <View style = {markerStyles.container}>
+                <View style = {markerStyles.viewLeft}>
+                    <View style = {markerStyles.outRectUp}>
+                        <View style = {markerStyles.inRectUp}></View>
+                    </View>
+                    <View style = {markerStyles.outRectDown}>
+                        <View style = {markerStyles.inRectDown}></View>
+                    </View>
+                </View>
+                <View style = {markerStyles.viewRight}>
+                    <Icon style = {markerStyles.triUp} name = "caret-up" color = "#979797"/>
+                    <View style = {markerStyles.viewDrag}>
+                        <Text style = {markerStyles.txtDrag}>drag</Text>
+                    </View>
+                    <Icon style = {markerStyles.triDown} name = "caret-down" color = "#979797"/>
+                </View>
+            </View>
+        )
+    }
+}
 
 export default class ReactionList extends Component {
     constructor(props) {
@@ -14,29 +41,27 @@ export default class ReactionList extends Component {
     }
 
     render() {
-        let { answerData } = this.props;
-
         return (
             <View style = {styles.viewLower}>
-                <View style = {styles.viewUp}>
-                    <Text style = {styles.txtUp}>
-                        I'm noticing what is OK in the current scene
-                    </Text>
-                </View>
-                <View style = {styles.viewSlider}>
-                    <Slider
-                        style = {styles.slider}
-                        minimumValue={0}
-                        maximumValue={1}
-                        minimumTrackTintColor="#FFFFFF"
-                        maximumTrackTintColor="#000000"
-                    />
-                </View>
-                <View style = {styles.viewDown}>
-                    <Text style = {styles.txtDown}>
-                        Unable to relax even though I know I should
-                    </Text>
-                </View>
+                <ImageBackground style = {styles.background} source = {Images.rateBackground} >
+                    <View style = {styles.viewUp}>
+                        <Text style = {styles.txtUp}>
+                            I'm noticing what is OK in the current scene
+                        </Text>
+                    </View>
+                    <View style = {styles.viewSlider}>
+                        <MultiSlider vertical={true}
+                            imageBackgroundSource = {Images.sliderBackground}
+                            containerStyle = {styles.slider}
+                            trackStyle = {{height: 0}}
+                            customMarker = {CustomMarker}/>
+                    </View>
+                    <View style = {styles.viewDown}>
+                        <Text style = {styles.txtDown}>
+                            Unable to relax even though I know I should
+                        </Text>
+                    </View>
+                </ImageBackground>
             </View>
         )
     }
@@ -46,7 +71,13 @@ const styles = StyleSheet.create({
     viewLower: {
         flex: 7,
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "stretch",
+    },
+    background: {
+        flex: 1,
+        flexDirection: "column",
+        resizeMode: "cover",
+        justifyContent: "center",
         paddingTop: 24,
         paddingLeft: 40,
         paddingRight: 40,
@@ -59,11 +90,8 @@ const styles = StyleSheet.create({
     },
     viewSlider: {
         flex: 3,
-        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        aspectRatio: 1,
-        transform: [ { rotate: "-90deg" } ]
     },
     viewDown: {
         flex: 1,
@@ -71,18 +99,103 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     txtUp: {
+        width: 225,
         fontSize: 15,
+        color: "#00103D",
         textTransform: "uppercase",
         textAlign: "center",
         letterSpacing: 1.3
     },
     slider: {
-        flex: 1
+        height: 40,
+        shadowColor: '#8F8F8F', // IOS
+        shadowOffset: { width: -4, height: 4 }, // IOS
+        shadowOpacity: 1, // IOS
+        elevation: 4, // Android
+        backgroundColor: "#8F8F8F"
     },
     txtDown: {
+        width: 225,
         fontSize: 15,
+        color: "#FF3D2C",
         textTransform: "uppercase",
         textAlign: "center",
         letterSpacing: 1.3
     }
 });
+
+const markerStyles = StyleSheet.create({
+    container: {
+        width: 40,
+        height: 160,
+        marginTop: 60,
+        justifyContent: "space-between"
+    },
+    viewLeft: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+        height: 100,
+        shadowColor: '#8F8F8F', // IOS
+        shadowOffset: { width: -4, height: 4 }, // IOS
+        shadowOpacity: 1, // IOS
+        elevation: 4, // Android
+        backgroundColor: "white",
+        borderRadius: 8,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    viewRight: {
+        flexDirection: "column",
+        alignItems: "center",
+        height: 40,
+        transform: [{rotate: '90deg'}]
+    },
+    outRectUp: {
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "center",
+        height: 40,
+    },
+    outRectDown: {
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "center",
+        height: 40
+    },
+    inRectUp: {
+        flex: 1,
+        backgroundColor: "#F9F9F9",
+        width: 4,
+        shadowColor: '#979797', // IOS
+        shadowOffset: { width: -4, height: 4 }, // IOS
+        shadowOpacity: 1, // IOS
+        elevation: 1, // Android
+    },
+    inRectDown: {
+        flex: 1,
+        backgroundColor: "#F9F9F9",
+        width: 4,
+        shadowColor: '#979797', // IOS
+        shadowOffset: { width: -4, height: 4 }, // IOS
+        shadowOpacity: 1, // IOS
+        elevation: 1, // Android
+    },
+    triUp: {
+        flex: 1
+    },
+    viewDrag: {
+        flex: 1.5,
+    },
+    triDown: {
+        flex: 1
+    },
+    txtDrag: {
+        textAlign: "center",
+        textAlignVertical: "center",
+        fontSize: 12,
+        letterSpacing: 1.5,
+        color: "#00103D",
+        opacity: 0.5
+    },
+})
