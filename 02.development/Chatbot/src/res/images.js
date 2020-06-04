@@ -4,6 +4,7 @@ const Images = {
     answerBackground1: require('assets/images/answer_background1.png'),
     answerBackground2: require('assets/images/answer_background2.png'),
     rateBackground: require('assets/images/rate_background.png'),
+    doneBackground: require('assets/images/done_background.png'),
     sliderBackground: require('assets/images/slider_background.png'),
     roundArrowRight: require('assets/images/round-arrow-right.png'),
     back: require('assets/images/back.png'),

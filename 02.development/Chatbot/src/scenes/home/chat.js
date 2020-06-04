@@ -12,7 +12,8 @@ import ReactionList from 'components/home/reaction-list';
 import FirstSelectList from 'components/home/first-select-list';
 import FirstSortList from 'components/home/first-sort-list';
 import ElseList from 'components/home/else-list';
-import Rate from 'components/home/rate'
+import Rate from 'components/home/rate';
+import Finish from 'components/home/finish';
 import { ChatType } from 'utils/enum';
 import { Images } from 'res';
 import { Data } from 'res';
@@ -278,7 +279,8 @@ export default class ChatScreen extends Component {
                 {/* {
                     this.getAnswerView()
                 } */}
-                <Rate />
+                {/* <Rate /> */}
+                <Finish />
                 <View style = {styles.viewFooter}>
                     <View style = {{flex: 1}}></View>
                     <View style = {{flex: 1}}></View>
