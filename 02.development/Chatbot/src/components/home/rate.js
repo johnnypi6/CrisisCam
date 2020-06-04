@@ -3,7 +3,7 @@ import {
     StyleSheet,
     View,
     Text,
-    Image,
+    Dimensions,
     ImageBackground
 } from "react-native";
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
@@ -35,12 +35,14 @@ class CustomMarker extends Component {
     }
 }
 
-export default class ReactionList extends Component {
+export default class Rate extends Component {
     constructor(props) {
         super(props);
     }
 
     render() {
+        const screenHeight = Math.round(Dimensions.get('window').height);
+
         return (
             <View style = {styles.viewLower}>
                 <ImageBackground style = {styles.background} source = {Images.rateBackground} >
@@ -50,7 +52,9 @@ export default class ReactionList extends Component {
                         </Text>
                     </View>
                     <View style = {styles.viewSlider}>
-                        <MultiSlider vertical={true}
+                        <MultiSlider values = {[5]}
+                            sliderLength = {screenHeight / 3.3}
+                            vertical = {true}
                             imageBackgroundSource = {Images.sliderBackground}
                             containerStyle = {styles.slider}
                             trackStyle = {{height: 0}}
@@ -71,13 +75,11 @@ const styles = StyleSheet.create({
     viewLower: {
         flex: 7,
         flexDirection: "column",
-        alignItems: "stretch",
     },
     background: {
         flex: 1,
         flexDirection: "column",
         resizeMode: "cover",
-        justifyContent: "center",
         paddingTop: 24,
         paddingLeft: 40,
         paddingRight: 40,
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
         color: "#00103D",
         textTransform: "uppercase",
         textAlign: "center",
-        letterSpacing: 1.3
+        letterSpacing: 1.3,
     },
     slider: {
         height: 40,
