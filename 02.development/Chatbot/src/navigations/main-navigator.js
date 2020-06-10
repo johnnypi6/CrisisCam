@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -18,7 +19,7 @@ export default function App() {
                 }}
                 drawerContentOptions = {{
                     itemStyle: {
-                        height: 40,
+                        height: Platform.OS === 'android' ? 40 : 48,
                         justifyContent: "center",
                         backgroundColor: "#E2EDFC",
                     },

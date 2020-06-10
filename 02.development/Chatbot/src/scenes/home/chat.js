@@ -5,6 +5,7 @@ import {
     StyleSheet,
     View
 } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import shuffle from 'shuffle-array';
 
 import ChatHistory from 'components/home/chat-history';
@@ -19,12 +20,10 @@ import Rate from 'components/home/rate';
 import Finish from 'components/home/finish';
 import { ChatType } from 'utils/enum';
 import ReactionAnswerList from 'utils/reaction-answer-list';
-import { Images } from 'res';
-import { Data } from 'res';
+import { Images, Data } from 'res';
 
 const maxStep = 4;
 const timeDelay = 1000;
-
 const greetings = [
     {
         body: "How do you feel right now",
