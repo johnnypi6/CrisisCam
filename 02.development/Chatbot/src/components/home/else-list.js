@@ -10,32 +10,39 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Images } from 'res';
 
-const tempdata_answerlist = [
+const answerList = [
     {
-        title: "I'M WORRIED",
-        body: "I'm worrying too much about preventing things that aren't likely"
+        title: "FEAR",
+        body: "Freaking out, panic, scared, keyed up, crippling fear"
     },
     {
-        title: "I'M SCARED",
-        body: "I'm scaring myself about things going wrong before anything is actually going wrong"
+        title: "STRESS",
+        body: "Tense, unable to relax, concerned, demotivated"
     },
     {
-        title: "I'M CAUGHT UP",
-        body: "I'm caught up inappropriate crippling fear of what could get even worse"
+        title: "WORRY",
+        body: "Avoiding, depressed, obsessing, worried about worrying"
     },
     {
-        title: "I'M WORRIED",
-        body: "I'm worrying too much about preventing things that aren't likely"
+        title: "PREVENTION",
+        body: "Don’t want to go wrong, make sure, escape, on-guard, stop something from happening"
+    },
+    {
+        title: "SHOW ME THE FULL LIST"
     }
 ]
 
 export default class ElseList extends Component {
+    onAnswerClicked(answer, index) {
+        this.props.onAnswerClicked(answer, index);
+    }
+
     render() {
         return (
             <View style = {styles.viewLower}>
                 <FlatList
-                    data = { tempdata_answerlist }
-                    renderItem = {({ item }) => {
+                    data = { answerList }
+                    renderItem = {({ item, index }) => {
                         return (
                             <View style = {styles.viewAnswerItem}>
                                 <ImageBackground source={ Images.answerBackground1 } 
@@ -46,7 +53,7 @@ export default class ElseList extends Component {
                                         <Text style = {styles.txtBody}>{item.body}</Text>
                                     </View>
                                     <View style = {styles.viewNextButton}>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.onAnswerClicked(item.body, index)}>
                                             <Image source = {Images.roundArrowRight} />
                                         </TouchableOpacity>
                                     </View>
@@ -88,7 +95,6 @@ const styles = StyleSheet.create({
         flex: 4,
         justifyContent: "center",
         alignItems: "center"
-        // backgroundColor: "blue"
     },
     txtTitle: {
         fontSize: 14,

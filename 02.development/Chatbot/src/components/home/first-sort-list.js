@@ -32,7 +32,7 @@ export default class FirstSortList extends Component {
     }
     
     render() {
-        let { disable } = this.props;
+        let { disabled } = this.props;
 
         return (
             <View style = {styles.viewLower}>
@@ -48,7 +48,7 @@ export default class FirstSortList extends Component {
                                         <Text style = {styles.txtBody}>{item.body}</Text>
                                     </View>
                                     <View style = {styles.viewNextButton}>
-                                        <TouchableOpacity style = {styles.touchBody} onPressIn={disable ? null : drag}>
+                                        <TouchableOpacity style = {styles.touchBody} onPressIn={disabled ? null : drag}>
                                             <Image source = {Images.reorder} />
                                         </TouchableOpacity>
                                     </View>

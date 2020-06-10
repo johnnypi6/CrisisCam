@@ -12,15 +12,20 @@ import ReactionList from 'components/home/reaction-list';
 import FirstSelectList from 'components/home/first-select-list';
 import FirstSortList from 'components/home/first-sort-list';
 import ElseList from 'components/home/else-list';
+import ElseSelectList from 'components/home/else-select-list';
+import CalibrateSelectList from 'components/home/calibrate-select-list';
+import CalibrateFinish from 'components/home/calibrate-finish';
 import Rate from 'components/home/rate';
 import Finish from 'components/home/finish';
 import { ChatType } from 'utils/enum';
+import ReactionAnswerList from 'utils/reaction-answer-list';
 import { Images } from 'res';
 import { Data } from 'res';
 
+const maxStep = 4;
 const timeDelay = 1000;
 
-const tempdata_chatlist = [
+const greetings = [
     {
         body: "How do you feel right now",
         new: true
@@ -31,42 +36,51 @@ const tempdata_chatlist = [
     }
 ]
 
-const tempdata_answerlist = [
-    {
-        title: "I'M WORRIED",
-        description: "I'm worrying too much about preventing things that aren't likely"
-    },
-    {
-        title: "I'M SCARED",
-        description: "I'm scaring myself about things going wrong before anything is actually going wrong"
-    },
-    {
-        title: "I'M CAUGHT UP",
-        description: "I'm caught up inappropriate crippling fear of what could get even worse"
-    },
-    {
-        title: "SOMETHING ELSE"
-    }
-]
-
 export default class ChatScreen extends Component {
     constructor(props) {
         super(props);
 
+        let { route } = this.props;
+
         this.firstAnswers = [];
+        this.reactionAnswers = [];
+        this.rates = [];
 
         this.fullAlternatives = shuffle(Data.fullAlternatives.fullAlternatives);
+        this.fearReactions = Data.fearReactions.fearReactions;
+        this.stressReactions = Data.stressReactions.stressReactions;
+        this.worryReactions = Data.worryReactions.worryReactions;
+        this.preventionReactions = Data.preventionReactions.preventionReactions;
+        this.fullReactions = Data.fullReactions.fullReactions;
         this.cycle = Data.monkeySpeaks.cycle;
         this.sort = Data.monkeySpeaks.sort;
+        this.calibrate = Data.monkeySpeaks.calibrate;
 
-        this.state = {
-            type: ChatType.REACTION,
-            step: 0,
-            count: 0,
-            messageData: tempdata_chatlist,
-            answerData: tempdata_answerlist,
-            waiting: false,
-            nextEnabled: false
+        if (route.params && route.params.calibrate) {
+            this.state = {
+                type: ChatType.CALIBRATESELECT,
+                step: 0,
+                count: 0,
+                rate: 5,
+                messageData: [{
+                    body: this.calibrate[0].monkeyspeaks[0].monkeyText,
+                    new: true
+                }],
+                answerData: this.fullReactions,
+                waiting: false,
+                nextEnabled: false
+            }
+        } else {
+            this.state = {
+                type: ChatType.REACTION,
+                step: 0,
+                count: 0,
+                rate: 5,
+                messageData: greetings,
+                answerData: ReactionAnswerList.data,
+                waiting: false,
+                nextEnabled: false
+            }
         }
 
         this.onNextClicked.bind(this);
@@ -80,7 +94,18 @@ export default class ChatScreen extends Component {
         } else if (type == ChatType.FIRSTSELECT) {
             this.onFirstSelectList_AnswerClicked(answer, index);
         } else if (type == ChatType.FIRSTSORT) {
-            this.onFirstSortList_AnswerClicked(answer, index)
+            this.onFirstSortList_AnswerClicked(answer, index);
+        } else if (type == ChatType.ELSE) {
+            this.onElseList_AnswerClicked(answer, index);
+        } else if (type == ChatType.ELSESELECT) {
+            this.setState({
+                nextEnabled: true
+            })
+        } else if (type == ChatType.CALIBRATESELECT) {
+            this.onCalibrateSelectList_AnswerClicked(answer, index);
+            this.reactionAnswers.push(answer);
+        } else if (type == ChatType.CALIBRATEFINISH) {
+            this.onCalibrateFinish_AnswerClicked(answer, index);
         }
     }
     
@@ -89,7 +114,29 @@ export default class ChatScreen extends Component {
 
         if (type == ChatType.FIRSTSORT) {
             this.onFirstSortList_NextClicked();
+        } else if (type == ChatType.RATE) {
+            this.onRate_NextClicked();
+        } else if (type == ChatType.ELSESELECT) {
+            this.onElseSelectList_NextClicked();
+        } else if (type == ChatType.CALIBRATEFINISH) {
+            this.onCalibrateFinish_NextClicked();
         }
+    }
+
+    onBtnBackClicked() {
+        this.props.navigation.navigate("Landing");
+    }
+
+    onBtnHamburgerClicked() {
+        this.props.navigation.openDrawer();
+    }
+
+    onBtnMoreClicked() {
+        this.startChat();
+    }
+
+    onBtnFinishClicked() {
+        this.props.navigation.push("WellDone");
     }
 
     onReactionList_AnswerClicked(answer, index) {
@@ -98,7 +145,25 @@ export default class ChatScreen extends Component {
         this.firstAnswers = []
 
         if (index == answerData.length - 1) {
-            // this.state.type = ChatType.ELSE
+            this.setState({
+                waiting: true,
+                nextEnabled: false
+            });
+
+            setTimeout(() => {
+                messageData.map(item => item.new = false);
+                messageData = [
+                    { body: "Which of these most closely describes how you are feeling at the moment?", new: true },
+                    ...messageData
+                ];
+                this.setState({
+                    type: ChatType.ELSE,
+                    count: 0,
+                    messageData: messageData,
+                    answerData: [],
+                    waiting: false
+                })
+            }, timeDelay)
         } else {
             messageData.map(item => item.new = false);
             messageData = [
@@ -106,10 +171,9 @@ export default class ChatScreen extends Component {
                 ...messageData
             ]
             this.setState({
-                type: ChatType.FIRSTSELECT,
                 messageData: messageData,
-                answerData: [],
-                waiting: true
+                waiting: true,
+                nextEnabled: false
             });
 
             setTimeout(() => {
@@ -127,8 +191,8 @@ export default class ChatScreen extends Component {
                     messageData: messageData,
                     answerData: answerData,
                     waiting: false
-                }
-            )}, timeDelay);
+                })
+            }, timeDelay);
         }
     }
 
@@ -146,8 +210,8 @@ export default class ChatScreen extends Component {
             this.setState({
                 count: count + 1,
                 messageData: messageData,
-                answerData: [],
-                waiting: true
+                waiting: true,
+                nextEnabled: false
             });
 
             setTimeout(() => {
@@ -165,8 +229,8 @@ export default class ChatScreen extends Component {
                     messageData: messageData,
                     answerData: answerData,
                     waiting: false
-                }
-            )}, timeDelay);
+                })
+            }, timeDelay);
         } else {
             messageData.map(item => item.new = false);
             messageData = [
@@ -177,8 +241,8 @@ export default class ChatScreen extends Component {
 
             this.setState({
                 messageData: messageData,
-                answerData: [],
-                waiting: true
+                waiting: true,
+                nextEnabled: false
             });
 
             setTimeout(() => {
@@ -193,8 +257,8 @@ export default class ChatScreen extends Component {
                     messageData: messageData,
                     answerData: this.firstAnswers,
                     waiting: false
-                }
-            )}, timeDelay);
+                })
+            }, timeDelay);
         }
     }
 
@@ -202,10 +266,8 @@ export default class ChatScreen extends Component {
         let { count, messageData } = this.state;
 
         if (count < 3) {
-            messageData.map(item => item.new = false);
             this.setState({
                 count: count + 1,
-                messageData: messageData,
                 waiting: true
             });
             setTimeout(() => {
@@ -217,9 +279,119 @@ export default class ChatScreen extends Component {
                     messageData: messageData,
                     waiting: false,
                     nextEnabled: count == 2
-                }
-            )}, timeDelay);
+                })
+            }, timeDelay);
         }
+    }
+
+    onElseList_AnswerClicked(answer, index) {
+        let { messageData } = this.state;
+
+        let message = ""
+        let answerData = []
+        if (index == 0) {
+            message = "Listed below are different ways a person may feel when their “prevent instinct” triggers feelings of fear\n\n" + 
+                "Select the reactions which come closest to describing how you are feeling right now";
+            answerData = this.fearReactions;
+        } else if (index == 1) {
+            message = "Listed below are different ways a person may feel when their “prevent instinct” triggers feelings of stress\n\n" + 
+                "Select the reactions which come closest to describing how you are feeling right now";
+            answerData = this.stressReactions;
+        } else if (index == 2) {
+            message = "Listed below are different ways a person may feel when their “prevent instinct” triggers feelings of worry\n\n" + 
+                "Select the reactions which come closest to describing how you are feeling right now";
+            answerData = this.worryReactions;
+        } else if (index == 3) {
+            message = "Listed below are different ways a person may feel when their instincts trigger feelings of prevention\n\n" + 
+                "Select the reactions which come closest to describing how you are feeling right now";
+            answerData = this.preventionReactions;
+        } else if (index == 4) {
+            message = "Listed below are different ways a person may feel when their “prevent instinct” is triggered\n\n" + 
+                "Select the ones which come closest to describing how you are feeling right now";
+            answerData = this.fullReactions;
+        }
+
+        this.setState({
+            waiting: true,
+            nextEnabled: false,
+            answerData: []
+        });
+
+        setTimeout(() => {
+            messageData.map(item => item.new = false);
+            messageData = [
+                { body: message, new: true},
+                ...messageData
+            ];
+            this.setState({
+                type: ChatType.ELSESELECT,
+                messageData: messageData,
+                answerData: answerData,
+                waiting: false,
+                nextEnabled: false
+            });
+        });
+    }
+
+    onCalibrateSelectList_AnswerClicked(answer, index) {
+        let { messageData, count } = this.state;
+
+        if (count < 2) {
+            this.setState({
+                waiting: true,
+                nextEnabled: false
+            });
+
+            setTimeout(() => {
+                messageData.map(item => item.new = false);
+                messageData = [
+                    {
+                        body: this.calibrate[0].monkeyspeaks[count + 1].monkeyText,
+                        new: true
+                    },
+                    ...messageData
+                ];
+                this.setState({
+                    count: count + 1,
+                    waiting: false,
+                    messageData: messageData
+                })
+            }, timeDelay)
+        } else {
+            this.setState({
+                waiting: true,
+                nextEnabled: false
+            });
+
+            setTimeout(() => {
+                messageData.map(item => item.new = false);
+                messageData = [
+                    {
+                        body: this.calibrate[0].monkeyspeaks[count + 1].monkeyText,
+                        new: true
+                    },
+                    ...messageData
+                ];
+                this.setState({
+                    type: ChatType.CALIBRATEFINISH,
+                    count: 0,
+                    waiting: false,
+                    nextEnabled: true,
+                    messageData: messageData,
+                    answerData: this.reactionAnswers
+                });
+            }, timeDelay)
+        }
+    }
+
+    onCalibrateFinish_AnswerClicked(answer, index) {
+        ReactionAnswerList.data = [
+            ...this.reactionAnswers,
+            {
+                title: "SOMETHING ELSE"
+            }
+        ]
+        this.startChat();
     }
 
     onFirstSortList_NextClicked() {
@@ -227,12 +399,11 @@ export default class ChatScreen extends Component {
 
         this.firstAnswers = []
 
-        if (step < 3) {
+        if (step < maxStep - 1) {
             this.setState({
-                type: ChatType.FIRSTSELECT,
                 step: step + 1,
-                answerData: [],
-                waiting: true
+                waiting: true,
+                nextEnabled: false
             });
 
             setTimeout(() => {
@@ -250,23 +421,165 @@ export default class ChatScreen extends Component {
                     messageData: messageData,
                     answerData: answerData,
                     waiting: false
-                }
-            )}, timeDelay);
+                })
+            }, timeDelay);
         } else {
+            this.setState({
+                step: 0,
+                waiting: true,
+                nextEnabled: true
+            })
 
+            this.rates = [];
+
+            setTimeout(() => {
+                messageData.map(item => item.new = false);
+                messageData = [
+                    { body: "Use the gauge to tell me which viewpoint feels closer and which feels further away", new: true },
+                    { body: "Okay, how are you feeling now?", new: true },
+                    ...messageData
+                ];
+                this.setState({
+                    type: ChatType.RATE,
+                    count: 0,
+                    rate: 5,
+                    messageData: messageData,
+                    answerData: [],
+                    waiting: false
+                });
+            }, timeDelay)
         }
     }
 
+    onRate_NextClicked() {
+        let { count, messageData, rate } = this.state;
+
+        if (count < 2) {
+            this.setState({
+                count: count + 1,
+                waiting: true
+            });
+
+            this.rates.push(rate)
+
+            setTimeout(() => {
+                messageData.map(item => item.new = false);
+                if (count == 0) {
+                    messageData = [
+                        { body: "Which of these feels closer and which feels further away?", new: true },
+                        { body: "Got it", new: true },
+                        ...messageData
+                    ];  
+                } else if (count == 1) {
+                    messageData = [
+                        { body: "…and which of these feels closer and which feels further away?", new: true },
+                        ...messageData
+                    ];  
+                }
+                this.setState({
+                    type: ChatType.RATE,
+                    count: count + 1,
+                    rate: 5,
+                    messageData: messageData,
+                    answerData: [],
+                    waiting: false
+                });
+            }, timeDelay);
+        } else {
+            this.setState({
+                count: 0,
+                waiting: true
+            })
+
+            this.rates.push(rate);
+
+            setTimeout(() => {
+                messageData.map(item => item.new = false);
+                if (this.rates[0] < 5 || this.rates[1] < 5 || this.rates[2] < 5) {
+                    messageData = [
+                        { body: "Do you want to...", new: true },
+                        { body: "I can see you are still a little stressed and worried", new: true },
+                        ...messageData
+                    ];  
+                } else {
+                    messageData = [
+                        { body: "Do you want to...", new: true },
+                        { body: "Great! It looks like you are a lot more relaxed", new: true },
+                        ...messageData
+                    ];  
+                }
+                this.setState({
+                    type: ChatType.FINISH,
+                    messageData: messageData,
+                    answerData: [],
+                    waiting: false,
+                    nextEnabled: false
+                });
+            })
+        }
+    }
+
+    onElseSelectList_NextClicked() {
+        this.startChat();
+    }
+
+    onCalibrateFinish_NextClicked() {
+        ReactionAnswerList.Data = [
+            ...this.reactionAnswers,
+            {
+                title: "SOMETHING ELSE"
+            }
+        ]
+        this.startChat();
+    }
+
+    startChat() {
+        let { messageData } = this.state;
+
+        this.setState({
+            waiting: true,
+            nextEnabled: false
+        });
+
+        setTimeout(() => {
+            messageData.map(item => item.new = false);
+            greetings.map(item => item.new = true);
+            messageData = [
+                ...greetings,
+                ...messageData
+            ];
+            this.setState({
+                type: ChatType.REACTION,
+                step: 0,
+                count: 0,
+                messageData: messageData,
+                answerData: ReactionAnswerList.data,
+                waiting: false,
+                nextEnabled: false
+            })
+        }, timeDelay)
+    }
+
     getAnswerView() {
-        let { type, answerData, waiting } = this.state;
+        let { type, answerData, waiting, rate } = this.state;
         if (type == ChatType.REACTION) {
             return <ReactionList answerData = {answerData} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.FIRSTSELECT) {
-            return <FirstSelectList answerData = {answerData} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
+            return <FirstSelectList answerData = {answerData} disabled = {waiting} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.FIRSTSORT) {
-            return <FirstSortList answerData = {answerData} disable = {waiting} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
+            return <FirstSortList answerData = {answerData} disabled = {waiting} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
+        } else if (type == ChatType.RATE) {
+            return <Rate value = { rate } onValueChange = { (value) => this.setState({rate: value}) } />
+        } else if (type == ChatType.FINISH) {
+            return <Finish onBtnMoreClicked = { this.onBtnMoreClicked.bind(this) } onBtnFinishClicked = { this.onBtnFinishClicked.bind(this) } />
         } else if (type == ChatType.ELSE) {
-            return <ElseList />
+            return <ElseList onAnswerClicked = { this.onAnswerClicked.bind(this) } />
+        } else if (type == ChatType.ELSESELECT) {
+            return <ElseSelectList answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
+        } else if (type == ChatType.CALIBRATESELECT) {
+            return <CalibrateSelectList answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
+        } else if (type == ChatType.CALIBRATEFINISH) {
+            return <CalibrateFinish answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
         }
     }
 
@@ -275,12 +588,13 @@ export default class ChatScreen extends Component {
 
         return (
             <View style = {styles.container}>
-                <ChatHistory messageData = {messageData} waiting = {waiting} />
-                {/* {
+                <ChatHistory messageData = {messageData} 
+                    waiting = {waiting} 
+                    onBtnBackClicked = { this.onBtnBackClicked.bind(this) }
+                    onBtnHamburgerClicked = { this.onBtnHamburgerClicked.bind(this) } />
+                {
                     this.getAnswerView()
-                } */}
-                {/* <Rate /> */}
-                <Finish />
+                }
                 <View style = {styles.viewFooter}>
                     <View style = {{flex: 1}}></View>
                     <View style = {{flex: 1}}></View>

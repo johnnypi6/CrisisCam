@@ -41,6 +41,8 @@ export default class Rate extends Component {
     }
 
     render() {
+        let { value } = this.props;
+
         const screenHeight = Math.round(Dimensions.get('window').height);
 
         return (
@@ -52,13 +54,16 @@ export default class Rate extends Component {
                         </Text>
                     </View>
                     <View style = {styles.viewSlider}>
-                        <MultiSlider values = {[5]}
+                        <MultiSlider values = {[value]}
                             sliderLength = {screenHeight / 3.3}
                             vertical = {true}
                             imageBackgroundSource = {Images.sliderBackground}
                             containerStyle = {styles.slider}
                             trackStyle = {{height: 0}}
-                            customMarker = {CustomMarker}/>
+                            customMarker = {CustomMarker}
+                            onValuesChangeFinish = { (values) => {
+                                this.props.onValueChange(values[0]);
+                             }}/>
                     </View>
                     <View style = {styles.viewDown}>
                         <Text style = {styles.txtDown}>
