@@ -28,6 +28,7 @@ export default class CalibrateSelectList extends Component {
 
     render() {
         let { answerData } = this.state;
+        let { disabled } = this.props;
         
         return (
             <View style = {styles.viewLower}>
@@ -36,7 +37,7 @@ export default class CalibrateSelectList extends Component {
                     renderItem = {({ item, index }) => {
                         return (
                             <View style = {styles.viewAnswerItem}>
-                                <TouchableOpacity style = { styles.touchAnswerItem } activeOpacity = { 0.6 } onPress = {() => {
+                                <TouchableOpacity style = { styles.touchAnswerItem } activeOpacity = { 0.6 } disabled = { disabled } onPress = {() => {
                                     if (!item.isSelected) {
                                         item.isSelected = true;
                                         this.setState({answerData});

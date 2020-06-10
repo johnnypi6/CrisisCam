@@ -520,7 +520,32 @@ export default class ChatScreen extends Component {
     }
 
     onElseSelectList_NextClicked() {
-        this.startChat();
+        let { messageData, answerData } = this.state;
+
+        this.setState({
+            waiting: true,
+            nextEnabled: false
+        });
+
+        this.fullAlternatives = shuffle(Data.fullAlternatives.fullAlternatives);
+
+        setTimeout(() => {
+            messageData.map(item => item.new = false);
+            messageData = [
+                { body: "Choose one", new: true },
+                { body: this.cycle[0].monkeyspeaks[0].monkeyText, new: true },
+                { body: this.cycle[0].monkeyspeaks[0].title, new: true },
+                ...messageData
+            ];
+            answerData = this.fullAlternatives.slice(0, 2);    
+            this.setState({
+                type: ChatType.FIRSTSELECT,
+                count: 0,
+                messageData: messageData,
+                answerData: answerData,
+                waiting: false
+            })
+        }, timeDelay);
     }
 
     onCalibrateFinish_NextClicked() {
@@ -577,7 +602,7 @@ export default class ChatScreen extends Component {
         } else if (type == ChatType.ELSESELECT) {
             return <ElseSelectList answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.CALIBRATESELECT) {
-            return <CalibrateSelectList answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
+            return <CalibrateSelectList answerData = {answerData} disabled = {waiting} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.CALIBRATEFINISH) {
             return <CalibrateFinish answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
         }
