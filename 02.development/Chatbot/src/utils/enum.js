@@ -9,5 +9,10 @@ export const ChatType = {
     THIRDSORT: "thirdsort",
     FOURTHSELECT: "fourthselection",
     FOURTHSORT:" fourthsort",
-    ELSE: "else"
+    RATE: "rate",
+    FINISH: "finish",
+    ELSE: "else",
+    ELSESELECT: "elseselect",
+    CALIBRATESELECT: "calibrateselect",
+    CALIBRATEFINISH: "calibratefinish"
 }

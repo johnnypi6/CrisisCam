@@ -22,7 +22,7 @@ export default class FirstSelectList extends Component {
     }
 
     render() {
-        let { answerData } = this.props;
+        let { answerData, disabled } = this.props;
 
         return (
             <View style = {styles.viewLower}>
@@ -38,7 +38,7 @@ export default class FirstSelectList extends Component {
                                         <Text style = {styles.txtBody}>{item.text}</Text>
                                     </View>
                                     <View style = {styles.viewNextButton}>
-                                        <TouchableOpacity onPress={() => this.onAnswerClicked(item.text)}>
+                                        <TouchableOpacity onPress={() => this.onAnswerClicked(item.text)} disabled = {disabled}>
                                             <Image source = {Images.roundArrowRight} />
                                         </TouchableOpacity>
                                     </View>

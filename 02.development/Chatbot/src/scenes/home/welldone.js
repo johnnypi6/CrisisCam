@@ -7,19 +7,33 @@ import {
     TouchableOpacity
 } from "react-native";
 import { Images } from 'res';
+import shuffle from 'shuffle-array';
+
+let messages = [
+    "You have achieved greater confidence and thus you can be more relaxed in this area of your life",
+    "You have become more willing to deal with events as they transpire, rather than being so constantly on guard and ‘preventional’ about what may come up",
+    "You have become more oriented to the present, and will find it easier to percieve directly what is right or wrong in it, and thus act accordingly"
+]
 
 export default class WellDoneScreen extends Component {
     constructor(props) {
         super(props);
 
         this.onBtnLaunchTapped = this.onBtnBetterTapped.bind(this);
+        this.onBtnNotGreatTapped = this.onBtnNotGreatTapped.bind(this);
     }
 
     onBtnBetterTapped() {
-        
+        this.props.navigation.navigate("Landing");
+    }
+
+    onBtnNotGreatTapped() {
+        this.props.navigation.navigate("Landing");
     }
 
     render() {
+        messages = shuffle(messages);
+
         return (
             <View style={styles.container}>
                 <ImageBackground source={ Images.doneBackground } style={styles.background}>
@@ -27,7 +41,7 @@ export default class WellDoneScreen extends Component {
                         <Text style = {styles.txtWellDone}>Well done,{"\n"}Mark</Text>
                         <Text style = {styles.txtDash}>—</Text>
                         <Text style = {styles.txtWellDoneDesc}>
-                            You have achieved greater confidence and thus you can be more relaxed in this area of your life
+                            { messages[0] }
                         </Text>
                     </View>
                     <View style = {styles.viewLower}>
@@ -37,7 +51,7 @@ export default class WellDoneScreen extends Component {
                                     <Text style={styles.btnBetter}>FEELING BETTER</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style = {styles.wrapNotGreat}>
+                            <TouchableOpacity style = {styles.wrapNotGreat} onPress = { this.onBtnNotGreatTapped } >
                                 <Text style={styles.btnNotGreat}>STILL NOT GREAT</Text>
                             </TouchableOpacity>
                         </View>

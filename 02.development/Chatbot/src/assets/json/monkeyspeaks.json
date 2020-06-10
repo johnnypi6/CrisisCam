@@ -100,7 +100,7 @@
             ]
         }
     ],
-    "sort": [
+    "sort" : [
         {
             "monkeyspeaks" : [
                 {
@@ -118,6 +118,28 @@
                 {
                     "id" : 4,
                     "monkeyText" : "Once you're satisfied with the order tap the arrow to proceed"
+                }
+            ]
+        }
+    ],
+    "calibrate" : [
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "monkeyText" : "Listed below are different ways a person may feel when their “prevent instinct” is triggered and they experience worry, fear, anxiety or panic\n\nSelect the reactions which come closest to describing how you have felt or behaved in the past"
+                },
+                {
+                    "id" : 2,
+                    "monkeyText" : "Be specific: think of actual events. Recalling where you were will also help to bring back more detail"
+                },
+                {
+                    "id" : 3,
+                    "monkeyText" : "Below are the reactions you selected\n\n You now need to choose the three that feel most appropriate for you\n\n Trust your gut feelings here"
+                },
+                {
+                    "id" : 4,
+                    "monkeyText" : "All done.\n\nNext time you launch CrisisCalm I will ask if the below describes how you are feeling.  I will then dispel those feelings of worry, fear, anxiety or panic and help you to calm down."
                 }
             ]
         }

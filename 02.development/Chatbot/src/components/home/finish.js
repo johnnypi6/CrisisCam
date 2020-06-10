@@ -6,6 +6,7 @@ import {
     StyleSheet
 } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
+import shuffle from 'shuffle-array';
 
 import { Images } from 'res';
 
@@ -20,7 +21,7 @@ export default class Finish extends Component {
                 <View style = {styles.viewUp}>
                     <Text style = {styles.txtUp}>Keep going -{"\n"}I need some more</Text>
                     <View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress = { () => this.props.onBtnMoreClicked() }>
                             <View style = {styles.viewMore}>
                                 <LinearGradient colors = {['#FF3D2C', '#AD486B', '#2F58CC']}
                                     start = {{x: 1.0, y: 2.0}}
@@ -38,7 +39,7 @@ export default class Finish extends Component {
                 <View style = {styles.viewDown}>
                     <Text style = {styles.txtDown}>Finish the session -{"\n"}I've got this</Text>
                     <View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress = { () => this.props.onBtnFinishClicked() }>
                             <View style = {styles.viewFinish}>
                                 <LinearGradient colors = {['#FF3D2C', '#AD486B', '#2F58CC']}
                                     start = {{x: -1.0, y: -1.0}}

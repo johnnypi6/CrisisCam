@@ -13,10 +13,15 @@ export default class LandingScreen extends Component {
         super(props);
 
         this.onBtnLaunchTapped = this.onBtnLaunchTapped.bind(this);
+        this.onBtnCalibrateTapped = this.onBtnCalibrateTapped.bind(this);
     }
 
     onBtnLaunchTapped() {
-        this.props.navigation.push("Chat")
+        this.props.navigation.push("Chat");
+    }
+
+    onBtnCalibrateTapped() {
+        this.props.navigation.push("Calibrate");
     }
 
     render() {
@@ -36,7 +41,7 @@ export default class LandingScreen extends Component {
                                     <Text style={styles.btnLaunch}>LAUNCH</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style = {styles.wrapCalibrate}>
+                            <TouchableOpacity style = {styles.wrapCalibrate} onPress = { this.onBtnCalibrateTapped }>
                                 <Text style={styles.btnCalibrate}>CALIBRATE</Text>
                             </TouchableOpacity>
                         </View>
@@ -82,7 +87,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        
     },
     txtIntro: {
         fontSize: 36,

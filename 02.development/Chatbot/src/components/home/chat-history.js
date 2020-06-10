@@ -15,6 +15,17 @@ import { Images } from 'res';
 export default class ChatHistory extends Component {
     constructor(props) {
         super(props);
+
+        this.onBtnBackClicked.bind(this);
+        this.onBtnHamburgerClicked.bind(this);
+    }
+
+    onBtnBackClicked() {
+        this.props.onBtnBackClicked();
+    }
+
+    onBtnHamburgerClicked() {
+        this.props.onBtnHamburgerClicked()
     }
 
     render() {
@@ -35,10 +46,10 @@ export default class ChatHistory extends Component {
                     useAngle = {true}
                     angle = {214}>
                     <View style = {styles.viewHeader}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress = { () => this.onBtnBackClicked() } style ={{ padding: 10 }} >
                             <Image source = {Images.back} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress = { () => this.onBtnHamburgerClicked() } >
                             <Image source = {Images.hamburger} />
                         </TouchableOpacity>
                     </View>

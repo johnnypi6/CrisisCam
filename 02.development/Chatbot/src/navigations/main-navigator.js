@@ -11,7 +11,22 @@ const Drawer = createDrawerNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Navigator initialRouteName="Home"
+                drawerPosition="right"
+                drawerStyle={{
+                    width: 200
+                }}
+                drawerContentOptions = {{
+                    itemStyle: {
+                        height: 33,
+                        justifyContent: "center",
+                        backgroundColor: "#E2EDFC",
+                    },
+                    labelStyle: {
+                        fontSize: 20,
+                    },
+                    backgroundColor: "#E2EDFC",
+                }}>
                 <Drawer.Screen name="Home" component={ HomeNavigator } />
                 <Drawer.Screen name="Settings" component={ SettingsScreen } />
                 <Drawer.Screen name="Learn" component={ LearnScreen } />
