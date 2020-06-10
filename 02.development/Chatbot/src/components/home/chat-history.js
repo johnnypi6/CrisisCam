@@ -6,8 +6,9 @@ import {
     FlatList,
     Text
 } from "react-native";
-import LinearGradient from 'react-native-linear-gradient';
+import { SafeAreaView  } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
 import Loader from 'react-native-three-dots-loader'
 
 import { Images } from 'res';
@@ -45,15 +46,7 @@ export default class ChatHistory extends Component {
                     style = {styles.gradUpper}
                     useAngle = {true}
                     angle = {214}>
-                    <View style = {styles.viewHeader}>
-                        <TouchableOpacity onPress = { () => this.onBtnBackClicked() } style ={{ padding: 10 }} >
-                            <Image source = {Images.back} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress = { () => this.onBtnHamburgerClicked() } >
-                            <Image source = {Images.hamburger} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style = {styles.viewMonkeyAndChat}>
+                    <SafeAreaView style = {styles.viewMonkeyAndChat}>
                         <View style = {styles.viewMonkey}>
                             <Image style = {styles.imgMonkey} source = {Images.monkeyHead} />
                         </View>
@@ -84,7 +77,15 @@ export default class ChatHistory extends Component {
                                 keyExtractor={(item, index) => 'key' + index }
                             />
                         </View>
-                    </View>
+                    </SafeAreaView>
+                    <SafeAreaView  style = {styles.viewHeader}>
+                        <TouchableOpacity onPress = { () => this.onBtnBackClicked() } style ={{ padding: 12 }} >
+                            <Image source = {Images.back} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress = { () => this.onBtnHamburgerClicked() } style = {{padding: 10}} >
+                            <Image source = {Images.hamburger} />
+                        </TouchableOpacity>
+                    </SafeAreaView >
                 </LinearGradient>
             </View>
         )
@@ -93,12 +94,17 @@ export default class ChatHistory extends Component {
 
 const styles = StyleSheet.create({
     viewHeader: {
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         paddingLeft: 16,
         paddingRight: 16,
-        height: 60
+        paddingBottom: 12,
+        height: 60,
+        position: "absolute",
+        left: 0,
+        right: 0
     },
     viewUpper: {
         flex: 3,
