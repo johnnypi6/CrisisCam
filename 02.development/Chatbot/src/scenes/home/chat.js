@@ -41,7 +41,7 @@ export default class ChatScreen extends Component {
         super(props);
 
         let { route } = this.props;
-
+        
         this.firstAnswers = [];
         this.reactionAnswers = [];
         this.rates = [];

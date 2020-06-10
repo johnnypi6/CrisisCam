@@ -19,7 +19,9 @@ export default class WellDoneScreen extends Component {
     constructor(props) {
         super(props);
 
-        this.onBtnLaunchTapped = this.onBtnBetterTapped.bind(this);
+console.log(this.props);
+
+        this.onBtnBetterTapped = this.onBtnBetterTapped.bind(this);
         this.onBtnNotGreatTapped = this.onBtnNotGreatTapped.bind(this);
     }
 

@@ -18,12 +18,12 @@ export default function App() {
                 }}
                 drawerContentOptions = {{
                     itemStyle: {
-                        height: 33,
+                        height: 40,
                         justifyContent: "center",
                         backgroundColor: "#E2EDFC",
                     },
                     labelStyle: {
-                        fontSize: 20,
+                        fontSize: 20
                     },
                     backgroundColor: "#E2EDFC",
                 }}>
