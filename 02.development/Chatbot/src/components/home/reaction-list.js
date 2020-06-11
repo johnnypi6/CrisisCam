@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
     StyleSheet,
+    ScrollView,
     View,
     Image,
     ImageBackground,
@@ -26,30 +27,33 @@ export default class ReactionList extends Component {
 
         return (
             <View style = {styles.viewLower}>
-                <Text style = {styles.txtComment}>TOP SELECTED REACTION</Text>
-                <FlatList
-                    data = { answerData }
-                    renderItem = {({ item, index }) => {
-                        return (
-                            <View style = {styles.viewAnswerItem}>
-                                <ImageBackground source={ Images.answerBackground1 } 
-                                    style = {styles.imgAnswer} 
-                                    borderRadius = {8}> 
-                                    <View style = {styles.viewAnswerMessage}>
-                                        <Text style = {styles.txtTitle}>{item.title}</Text>
-                                        <Text style = {styles.txtBody}>{item.description}</Text>
-                                    </View>
-                                    <View style = {styles.viewNextButton}>
-                                        <TouchableOpacity onPress={() => this.onAnswerClicked(item.title, index)}>
-                                            <Image source = {Images.roundArrowRight} />
-                                        </TouchableOpacity>
-                                    </View>
-                                </ImageBackground>
-                            </View>
-                        )
-                    }}
-                    keyExtractor={(item, index) => 'key' + index }
-                />
+                <ScrollView style = {styles.scroll}>
+                    <Text style = {styles.txtComment}>TOP SELECTED REACTION</Text>
+                    <FlatList
+                        scrollEnabled = { false }
+                        data = { answerData }
+                        renderItem = {({ item, index }) => {
+                            return (
+                                <View style = {styles.viewAnswerItem}>
+                                    <ImageBackground source={ Images.answerBackground1 } 
+                                        style = {styles.imgAnswer} 
+                                        borderRadius = {8}> 
+                                        <View style = {styles.viewAnswerMessage}>
+                                            <Text style = {styles.txtTitle}>{item.title}</Text>
+                                            <Text style = {styles.txtBody}>{item.description}</Text>
+                                        </View>
+                                        <View style = {styles.viewNextButton}>
+                                            <TouchableOpacity onPress={() => this.onAnswerClicked(item.title, index)}>
+                                                <Image source = {Images.roundArrowRight} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </ImageBackground>
+                                </View>
+                            )
+                        }}
+                        keyExtractor={(item, index) => 'key' + index }
+                    />
+                </ScrollView>
             </View>
         )
     }
@@ -57,7 +61,9 @@ export default class ReactionList extends Component {
 
 const styles = StyleSheet.create({
     viewLower: {
-        flex: 7,
+        flex: 7
+    },
+    scroll: {
         paddingTop: 24,
         paddingLeft: 40,
         paddingRight: 40,

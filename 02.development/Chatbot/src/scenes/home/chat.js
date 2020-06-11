@@ -3,7 +3,8 @@ import {
     Image,
     TouchableOpacity,
     StyleSheet,
-    View
+    View,
+    ScrollView
 } from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import shuffle from 'shuffle-array';

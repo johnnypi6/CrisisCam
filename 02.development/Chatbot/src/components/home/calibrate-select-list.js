@@ -33,6 +33,7 @@ export default class CalibrateSelectList extends Component {
         return (
             <View style = {styles.viewLower}>
                 <FlatList
+                    style = {styles.scroll}
                     data = { answerData }
                     renderItem = {({ item, index }) => {
                         return (
@@ -65,7 +66,9 @@ export default class CalibrateSelectList extends Component {
 
 const styles = StyleSheet.create({
     viewLower: {
-        flex: 7,
+        flex: 7
+    },
+    scroll: {
         paddingTop: 24,
         paddingLeft: 40,
         paddingRight: 40,

@@ -41,6 +41,7 @@ export default class ElseList extends Component {
         return (
             <View style = {styles.viewLower}>
                 <FlatList
+                    style = {styles.scroll}
                     data = { answerList }
                     renderItem = {({ item, index }) => {
                         return (
@@ -70,7 +71,9 @@ export default class ElseList extends Component {
 
 const styles = StyleSheet.create({
     viewLower: {
-        flex: 7,
+        flex: 7
+    },
+    scroll: {
         paddingTop: 24,
         paddingLeft: 40,
         paddingRight: 40,

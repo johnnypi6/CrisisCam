@@ -37,6 +37,7 @@ export default class FirstSortList extends Component {
         return (
             <View style = {styles.viewLower}>
                 <DraggableFlatList
+                    style = {styles.scroll}
                     data = { this.state.data }
                     renderItem = {({ item, index, drag, isActive }) => {
                         return (
@@ -66,7 +67,9 @@ export default class FirstSortList extends Component {
 
 const styles = StyleSheet.create({
     viewLower: {
-        flex: 7,
+        flex: 7
+    },
+    scroll: {
         paddingTop: 24,
         paddingLeft: 40,
         paddingRight: 40,
