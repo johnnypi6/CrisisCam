@@ -145,25 +145,35 @@ export default class ChatScreen extends Component {
         this.firstAnswers = []
 
         if (index == answerData.length - 1) {
-            this.setState({
-                waiting: true,
-                nextEnabled: false
-            });
+            let firstState = {nextEnabled: false}
+            let messages = [
+                "Which of these most closely describes how you are feeling at the moment?"
+            ]
+            let lastState = {
+                type: ChatType.ELSE,
+                count: 0,
+                answerData: [],
+            }
+            this.monkeyChat(firstState, messages, lastState);
+            // this.setState({
+            //     waiting: true,
+            //     nextEnabled: false
+            // });
 
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                messageData = [
-                    { body: "Which of these most closely describes how you are feeling at the moment?", new: true },
-                    ...messageData
-                ];
-                this.setState({
-                    type: ChatType.ELSE,
-                    count: 0,
-                    messageData: messageData,
-                    answerData: [],
-                    waiting: false
-                })
-            }, timeDelay)
+            // setTimeout(() => {
+            //     messageData.map(item => item.new = false);
+            //     messageData = [
+            //         { body: "Which of these most closely describes how you are feeling at the moment?", new: true },
+            //         ...messageData
+            //     ];
+            //     this.setState({
+            //         type: ChatType.ELSE,
+            //         count: 0,
+            //         messageData: messageData,
+            //         answerData: [],
+            //         waiting: false
+            //     })
+            // }, timeDelay)
         } else {
             messageData.map(item => item.new = false);
             messageData = [
@@ -583,6 +593,27 @@ export default class ChatScreen extends Component {
                 nextEnabled: false
             })
         }, timeDelay)
+    }
+
+    monkeyChat(firstState, monkeyMessages, lastState) {
+        let { messageData } = this.state;
+        
+        firstState.waiting = true;
+        this.setState(firstState);
+
+        let i = 0;
+        setTimeout(function run() {
+            messageData.map(item => item.new = false);
+            messageData = [{body: monkeyMessages[i], new: true}, ...messageData]
+            if (i < monkeyMessages.length - 1) {
+                this.setState({messageData});
+                i++
+                setTimeout(run, timeDelay);
+            } else {
+                lastState.messageData = messageData;
+                this.setState(lastState);
+            }
+        }, timeDelay);
     }
 
     getAnswerView() {

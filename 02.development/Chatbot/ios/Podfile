@@ -44,8 +44,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'Chatbot' do
-  # Pods for Chatbot
+target 'CrisisCalm' do
+  # Pods for CrisisCalm
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -77,7 +77,7 @@ target 'Chatbot' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  target 'ChatbotTests' do
+  target 'CrisisCalmTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -94,10 +94,10 @@ target 'Chatbot' do
   end
 end
 
-target 'Chatbot-tvOS' do
-  # Pods for Chatbot-tvOS
+target 'CrisisCalm-tvOS' do
+  # Pods for CrisisCalm-tvOS
 
-  target 'Chatbot-tvOSTests' do
+  target 'CrisisCalm-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

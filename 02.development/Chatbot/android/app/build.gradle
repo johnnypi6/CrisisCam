@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.chatbot"
+        applicationId "com.crisiscalm"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

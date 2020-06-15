@@ -71,8 +71,6 @@ const styles = StyleSheet.create({
     },
     scroll: {
         paddingTop: 24,
-        paddingLeft: 40,
-        paddingRight: 40,
         paddingBottom: 16
     },
     txtComment: {
@@ -83,6 +81,8 @@ const styles = StyleSheet.create({
         marginTop: 8,
         height: 110,
         borderRadius: 8,
+        paddingLeft: 40,
+        paddingRight: 40
     },
     imgAnswer: {
         flex: 1,
