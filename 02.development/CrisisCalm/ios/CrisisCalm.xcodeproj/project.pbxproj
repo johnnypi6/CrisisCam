@@ -16,12 +16,10 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* CrisisCalmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CrisisCalmTests.m */; };
-<<<<<<< HEAD
 		3EBB154DE2E2A8C9CD073846 /* libPods-CrisisCalm-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 940C557DD715394BE5FFA88F /* libPods-CrisisCalm-tvOS.a */; };
 		66A33012D69D929589608AF7 /* libPods-CrisisCalm-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 198C8C3875712F9DEEA0CE4F /* libPods-CrisisCalm-tvOSTests.a */; };
 		9118C9CF4D352C1A760E9301 /* libPods-CrisisCalm-CrisisCalmTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1846D380AC191AE080D15DE6 /* libPods-CrisisCalm-CrisisCalmTests.a */; };
 		974EB8517A8E5D3592FFF347 /* libPods-CrisisCalm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84774B3107A93745A436F3D8 /* libPods-CrisisCalm.a */; };
-=======
 		35C7112F01304A4C8A27DB84 /* Avenir-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 237EF1DBCD55416DABDA1E54 /* Avenir-Black.otf */; };
 		D1ABBF304BF64004B0058E19 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C68FDECC12D4B98A4E69B03 /* AntDesign.ttf */; };
 		F33E69EF2E704DE1BA3198D7 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 682232CEABCF48AA8419A84B /* Entypo.ttf */; };
@@ -39,7 +37,6 @@
 		0104BC4B85FB4F9BB4744BB9 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64227516878C41A7BA65BC31 /* Octicons.ttf */; };
 		9EA67E40C20541BBB093F577 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02E312DCB9B84733A8A2705A /* SimpleLineIcons.ttf */; };
 		81717F165AB44B2E86EA44BE /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4BF4179043940E49FEA6D82 /* Zocial.ttf */; };
->>>>>>> aece486e72bc008f9a716df7997eaacfcf20adbc
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,11 +214,8 @@
 				00E356EF1AD99517003FC87E /* CrisisCalmTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-<<<<<<< HEAD
 				122B80270C093B0B5AA1E9F0 /* Pods */,
-=======
 				6F6C01C4529A4FBC8C173583 /* Resources */,
->>>>>>> aece486e72bc008f9a716df7997eaacfcf20adbc
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
