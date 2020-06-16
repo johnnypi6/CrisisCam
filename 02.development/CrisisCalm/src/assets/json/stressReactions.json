@@ -1,0 +1,80 @@
+{
+    "stressReactions" : [
+        {
+            "id" : 1,
+            "title" : "I'M CONCERNED",
+            "description" : "I’m concerned about how unacceptable my behaviour could get"
+        },
+        
+        {
+            "id" : 2,
+            "title" : "I’M IN DISPAIR",
+            "description" : "I’m despairing and depressed that I can’t keep things from going wrong again and again"
+        },
+        {
+            "id" : 3,
+            "title" : "I’M FREAKING OUT",
+            "description" : "I’m freaking out while also thinking it isn’t ok to be freaked out"
+        },
+        {
+            "id" : 4,
+            "title" : "I’M KEYED UP",
+            "description" : "I’m keyed up to prevent something that may not even be threatening"
+        },
+        {
+            "id" : 5,
+            "title" : "I’M OBESSING",
+            "description" : "I’m obsessing about things getting worse"
+        },
+        {
+            "id" : 6,
+            "title" : "I’M PREOCCUPIED",
+            "description" : "I’m preoccupied by what I don't want to go wrong"
+        },
+        {
+            "id" : 7,
+            "title" : "I’M DEMOTIVATED",
+            "description" : "I’m over-concerned and stressed, which holds down motivation and dampens my spirits"
+        },
+        {
+            "id" : 8,
+            "title" : "I’M STRESSED",
+            "description" : "I’m experiencing constant stress which is slowing down my progress"
+        },
+        {
+            "id" : 9,
+            "title" : "I’M TENSE",
+            "description" : "I’m very concerned and tense about preventing future negatives"
+        },
+        {
+            "id" : 10,
+            "title" : "I’M TOO ON GUARD",
+            "description" : "I’m constantly on guard and 'preventional' about what might come up"
+        },
+        {
+            "id" : 11,
+            "title" : "I'M WORRYING ABOUT THINGS",
+            "description" : "I’m worrying way too much about things that aren't even likely"
+        },
+        {
+            "id" : 12,
+            "title" : "I'M WORRYING ABOUT MY BEHAVIOUR",
+            "description" : "I’m too worried about how unacceptable my behaviour could get"
+        },
+        {
+            "id" : 13,
+            "title" : "I’M WORRYING TOO MUCH",
+            "description" : "I’m worrying way too much about preventing things that aren’t even likely"
+        },
+        {
+            "id" : 14,
+            "title" : "I’M WORRIED",
+            "description" : "I’m worrying about worrying"
+        },
+        {
+            "id" : 15,
+            "title" : "I'M UNABLE TO RELAX",
+            "description" : "I’m unable to relax even when I know I should, I’m tense about future negatives"
+        }
+    ]
+}

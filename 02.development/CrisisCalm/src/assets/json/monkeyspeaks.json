@@ -1,0 +1,147 @@
+{
+    "cycle": [
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "title" : "I'll help you calm down",
+                    "monkeyText" : "Whick option looks like more attractive?"
+                },
+                {
+                    "id" : 2,
+                    "title" : "...and again",
+                    "monkeyText" : "Whick option looks like more attractive?"
+                },
+                {
+                    "id" : 3,
+                    "title" : "...once more",
+                    "monkeyText" : "Whick option looks like more attractive?"
+                },
+                {
+                    "id" : 4,
+                    "title" : "...last time",
+                    "monkeyText" : "Whick option looks like more attractive?"
+                }
+            ]
+        },
+
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "title" : "Now I'll help you releax",
+                    "monkeyText" : "Which feels more doable?"
+                },
+                {
+                    "id" : 2,
+                    "title" : "...and again",
+                    "monkeyText" : "Which feels more doable?"
+                },
+                {
+                    "id" : 3,
+                    "title" : "...once more",
+                    "monkeyText" : "Which feels more doable?"
+                },
+                {
+                    "id" : 4,
+                    "title" : "...last time",
+                    "monkeyText" : "Which feels more doable?"
+                }
+            ]
+        },
+
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "title" : "I'll help you see what is okay in the present",
+                    "monkeyText" : "Which speaks to you the most?"
+                },
+                {
+                    "id" : 2,
+                    "title" : "...and again",
+                    "monkeyText" : "Which speaks to you the most?"
+                },
+                {
+                    "id" : 3,
+                    "title" : "...once more",
+                    "monkeyText" : "Which speaks to you the most?"
+                },
+                {
+                    "id" : 4,
+                    "title" : "...last time",
+                    "monkeyText" : "Which speaks to you the most?"
+                }
+            ]
+        },
+
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "title" : "I'll show you how alright things really are",
+                    "monkeyText" : "Which seems more appropriate?"
+                },
+                {
+                    "id" : 2,
+                    "title" : "...and again",
+                    "monkeyText" : "Which seems more appropriate?"
+                },
+                {
+                    "id" : 3,
+                    "title" : "...once more",
+                    "monkeyText" : "Which seems more appropriate?"
+                },
+                {
+                    "id" : 4,
+                    "title" : "...last time",
+                    "monkeyText" : "Which seems more appropriate?"
+                }
+            ]
+        }
+    ],
+    "sort" : [
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "monkeyText" : "Here are your choices - pick which one feels easiest and drag it to the top"
+                },
+                {
+                    "id" : 2,
+                    "monkeyText" : "Choose which feels next easiest and drag it into the second position"
+                },
+                {
+                    "id" : 3,
+                    "monkeyText" : "Drag next easiest into the third position"
+                },
+                {
+                    "id" : 4,
+                    "monkeyText" : "Once you're satisfied with the order tap the arrow to proceed"
+                }
+            ]
+        }
+    ],
+    "calibrate" : [
+        {
+            "monkeyspeaks" : [
+                {
+                    "id" : 1,
+                    "monkeyText" : "Listed below are different ways a person may feel when their “prevent instinct” is triggered and they experience worry, fear, anxiety or panic\n\nSelect the reactions which come closest to describing how you have felt or behaved in the past"
+                },
+                {
+                    "id" : 2,
+                    "monkeyText" : "Be specific: think of actual events. Recalling where you were will also help to bring back more detail"
+                },
+                {
+                    "id" : 3,
+                    "monkeyText" : "Below are the reactions you selected\n\n You now need to choose the three that feel most appropriate for you\n\n Trust your gut feelings here"
+                },
+                {
+                    "id" : 4,
+                    "monkeyText" : "All done.\n\nNext time you launch CrisisCalm I will ask if the below describes how you are feeling.  I will then dispel those feelings of worry, fear, anxiety or panic and help you to calm down."
+                }
+            ]
+        }
+    ]
+}
