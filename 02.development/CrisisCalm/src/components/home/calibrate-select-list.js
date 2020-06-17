@@ -13,12 +13,6 @@ export default class CalibrateSelectList extends Component {
     constructor(props) {
         super(props);
 
-        let { answerData } = this.props;
-        this.state = {
-            answerData: answerData
-        };
-        answerData.map(item => item.isSelected = false);
-
         this.onAnswerClicked = this.onAnswerClicked.bind(this);
     }
 
@@ -27,13 +21,12 @@ export default class CalibrateSelectList extends Component {
     }
 
     render() {
-        let { answerData } = this.state;
-        let { disabled } = this.props;
+        let { answerData, disabled } = this.props;
         
         return (
             <View style = {styles.viewLower}>
                 <FlatList
-                    style = {styles.scroll}
+                    contentContainerStyle = {styles.scroll}
                     data = { answerData }
                     renderItem = {({ item, index }) => {
                         return (

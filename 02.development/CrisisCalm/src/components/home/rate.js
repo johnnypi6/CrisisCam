@@ -41,7 +41,7 @@ export default class Rate extends Component {
     }
 
     render() {
-        let { value } = this.props;
+        let { value, disabled } = this.props;
 
         const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -55,6 +55,7 @@ export default class Rate extends Component {
                     </View>
                     <View style = {styles.viewSlider}>
                         <MultiSlider values = {[value]}
+                            disabled = {disabled}
                             sliderLength = {screenHeight / 3.3}
                             vertical = {true}
                             imageBackgroundSource = {Images.sliderBackground}

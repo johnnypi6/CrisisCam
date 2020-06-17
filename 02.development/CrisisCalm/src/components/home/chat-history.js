@@ -65,7 +65,7 @@ export default class ChatHistory extends Component {
                                             </View>
                                         </View>
                                         :
-                                        <View style = { styles.viewChatItem }>
+                                        <View style = { item.isUser ? styles.viewUserChatItem : styles.viewChatItem }>
                                             <View style = {styles.viewChatItemWrapper}>
                                                 <Text style = { item.new ? styles.txtChatItem : styles.txtChatOldItem }>
                                                     { item.body }
@@ -139,7 +139,16 @@ const styles = StyleSheet.create({
     viewChatItem: {
         flex: 1,
         flexDirection: "row",
-        paddingLeft: 8
+        paddingLeft: 8,
+        paddingRight: 40,
+        justifyContent: "flex-start"
+    },
+    viewUserChatItem: {
+        flex: 1,
+        flexDirection: "row",
+        paddingLeft: 40,
+        paddingRight: 8,
+        justifyContent: "flex-end"
     },
     viewLoader: {
         flex: 1,

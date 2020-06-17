@@ -25,7 +25,7 @@ const answerList = [
     },
     {
         title: "PREVENTION",
-        body: "Don’t want to go wrong, make sure, escape, on-guard, stop something from happening"
+        body: "Don’t want to go wrong, make sure, escape, on-guard, prevent something from happening"
     },
     {
         title: "SHOW ME THE FULL LIST"
@@ -38,10 +38,11 @@ export default class ElseList extends Component {
     }
 
     render() {
+        let { disabled } = this.props;
         return (
             <View style = {styles.viewLower}>
                 <FlatList
-                    style = {styles.scroll}
+                    contentContainerStyle = {styles.scroll}
                     data = { answerList }
                     renderItem = {({ item, index }) => {
                         return (
@@ -54,7 +55,7 @@ export default class ElseList extends Component {
                                         <Text style = {styles.txtBody}>{item.body}</Text>
                                     </View>
                                     <View style = {styles.viewNextButton}>
-                                        <TouchableOpacity onPress={() => this.onAnswerClicked(item.body, index)}>
+                                        <TouchableOpacity onPress={() => this.onAnswerClicked(item.body, index)} disabled = {disabled}>
                                             <Image source = {Images.roundArrowRight} />
                                         </TouchableOpacity>
                                     </View>

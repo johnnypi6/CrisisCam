@@ -5,22 +5,22 @@
                 {
                     "id" : 1,
                     "title" : "I'll help you calm down",
-                    "monkeyText" : "Whick option looks like more attractive?"
+                    "monkeyText" : "Which option looks like more attractive?"
                 },
                 {
                     "id" : 2,
                     "title" : "...and again",
-                    "monkeyText" : "Whick option looks like more attractive?"
+                    "monkeyText" : "Which option looks like more attractive?"
                 },
                 {
                     "id" : 3,
                     "title" : "...once more",
-                    "monkeyText" : "Whick option looks like more attractive?"
+                    "monkeyText" : "Which option looks like more attractive?"
                 },
                 {
                     "id" : 4,
                     "title" : "...last time",
-                    "monkeyText" : "Whick option looks like more attractive?"
+                    "monkeyText" : "Which option looks like more attractive?"
                 }
             ]
         },
@@ -29,7 +29,7 @@
             "monkeyspeaks" : [
                 {
                     "id" : 1,
-                    "title" : "Now I'll help you releax",
+                    "title" : "Now I'll help you calm down",
                     "monkeyText" : "Which feels more doable?"
                 },
                 {

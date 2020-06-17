@@ -15,30 +15,23 @@ export default class FirstSortList extends Component {
     constructor(props) {
         super(props);
 
-        let { answerData } = this.props;
-
-        answerData.map((item, index) => item.key = `item-${index}`);
-
-        this.state = {
-            data: answerData
-        };
-
         this.onAnswerClicked = this.onAnswerClicked.bind(this);
     }
     
     onAnswerClicked(data) {
-        this.setState({ data })
-        this.props.onAnswerClicked();
+        this.props.onAnswerClicked(data);
     }
     
     render() {
-        let { disabled } = this.props;
+        let { disabled, answerData } = this.props;
+        let data = answerData;
 
         return (
             <View style = {styles.viewLower}>
                 <DraggableFlatList
-                    style = {styles.scroll}
-                    data = { this.state.data }
+                    contentContainerStyle={styles.scroll}
+                    // style = {styles.scroll}
+                    data = { data }
                     renderItem = {({ item, index, drag, isActive }) => {
                         return (
                             <View style = {styles.viewAnswerItem}>

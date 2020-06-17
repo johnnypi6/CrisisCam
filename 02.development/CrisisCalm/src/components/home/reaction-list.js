@@ -23,11 +23,11 @@ export default class ReactionList extends Component {
     }
 
     render() {
-        let { answerData } = this.props;
+        let { answerData, disabled } = this.props;
 
         return (
             <View style = {styles.viewLower}>
-                <ScrollView style = {styles.scroll}>
+                <ScrollView contentContainerStyle = {styles.scroll}>
                     <Text style = {styles.txtComment}>TOP SELECTED REACTION</Text>
                     <FlatList
                         scrollEnabled = { false }
@@ -43,7 +43,7 @@ export default class ReactionList extends Component {
                                             <Text style = {styles.txtBody}>{item.description}</Text>
                                         </View>
                                         <View style = {styles.viewNextButton}>
-                                            <TouchableOpacity onPress={() => this.onAnswerClicked(item.title, index)}>
+                                            <TouchableOpacity onPress={() => this.onAnswerClicked(item.title, index)} disabled = {disabled}>
                                                 <Image source = {Images.roundArrowRight} />
                                             </TouchableOpacity>
                                         </View>
@@ -61,12 +61,12 @@ export default class ReactionList extends Component {
 
 const styles = StyleSheet.create({
     viewLower: {
-        flex: 7
+        flex: 7,
     },
     scroll: {
-        paddingTop: 24,
         paddingLeft: 40,
         paddingRight: 40,
+        paddingTop: 24,
         paddingBottom: 16
     },
     txtComment: {

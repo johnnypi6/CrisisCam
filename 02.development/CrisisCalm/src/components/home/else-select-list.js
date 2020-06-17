@@ -13,12 +13,6 @@ export default class ElseSelectList extends Component {
     constructor(props) {
         super(props);
 
-        let { answerData } = this.props;
-        this.state = {
-            answerData: answerData
-        };
-        answerData.map(item => item.isSelected = false);
-
         this.onAnswerClicked = this.onAnswerClicked.bind(this);
     }
 
@@ -27,17 +21,17 @@ export default class ElseSelectList extends Component {
     }
 
     render() {
-        let { answerData } = this.state;
+        let { answerData, disabled } = this.props;
         
         return (
             <View style = {styles.viewLower}>
                 <FlatList
-                    style = {styles.scroll}
+                    contentContainerStyle = {styles.scroll}
                     data = { answerData }
                     renderItem = {({ item, index }) => {
                         return (
                             <View style = {styles.viewAnswerItem}>
-                                <TouchableOpacity style = { styles.touchAnswerItem } activeOpacity = { 0.6 } onPress = {() => {
+                                <TouchableOpacity style = { styles.touchAnswerItem } activeOpacity = { 0.6 } disabled = {disabled} onPress = {() => {
                                     answerData.map(item => item.isSelected = false);
                                     item.isSelected = true;
                                     this.setState({ answerData });

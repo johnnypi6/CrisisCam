@@ -26,14 +26,8 @@ import { Images, Data } from 'res';
 const maxStep = 4;
 const timeDelay = 1000;
 const greetings = [
-    {
-        body: "How do you feel right now",
-        new: true
-    },
-    {
-        body: "Hi, Mark1",
-        new: true
-    }
+    "Hi, Mark1",
+    "How do you feel right now"
 ]
 
 export default class ChatScreen extends Component {
@@ -42,10 +36,6 @@ export default class ChatScreen extends Component {
 
         let { route } = this.props;
         
-        this.firstAnswers = [];
-        this.reactionAnswers = [];
-        this.rates = [];
-
         this.fullAlternatives = shuffle(Data.fullAlternatives.fullAlternatives);
         this.fearReactions = Data.fearReactions.fearReactions;
         this.stressReactions = Data.stressReactions.stressReactions;
@@ -56,38 +46,58 @@ export default class ChatScreen extends Component {
         this.sort = Data.monkeySpeaks.sort;
         this.calibrate = Data.monkeySpeaks.calibrate;
 
-        if (route.params && route.params.calibrate) {
-            this.state = {
-                type: ChatType.CALIBRATESELECT,
-                step: 0,
-                count: 0,
-                rate: 5,
-                messageData: [{
-                    body: this.calibrate[0].monkeyspeaks[0].monkeyText,
-                    new: true
-                }],
-                answerData: this.fullReactions,
-                waiting: false,
-                nextEnabled: false
-            }
-        } else {
-            this.state = {
-                type: ChatType.REACTION,
-                step: 0,
-                count: 0,
-                rate: 5,
-                messageData: greetings,
-                answerData: ReactionAnswerList.data,
-                waiting: false,
-                nextEnabled: false
-            }
+        this.state = {
+            step: 0,
+            count: 0,
+            rate: 5,
+            messageData: [],
+            waiting: true,
+            nextEnabled: false,
+            firstAnswers: [],
+            reactionAnswers: [],
+            rates: []
         }
 
-        this.onNextClicked.bind(this);
+        if (route.params && route.params.calibrate) {
+            this.fullReactions.map(item => item.isSelected = false)
+            this.state.type = ChatType.CALIBRATESELECT;
+            this.state.answerData = this.fullReactions;
+            this.monkeyChat({}, [this.calibrate[0].monkeyspeaks[0].monkeyText], {})
+        } else {
+            this.state.type = ChatType.REACTION;
+            this.state.answerData = ReactionAnswerList.data;
+            this.monkeyChat({}, greetings, {});
+        }
+
+        this.pastStates = [];
+        this.presentState = this.state;
+
+        this.onNextClicked = this.onNextClicked.bind(this);
+        this.monkeyChat = this.monkeyChat.bind(this);
     }
     
+    canUndo() {
+        return this.pastStates.length > 0;
+    }
+
+    updateState(value) {
+        if (JSON.stringify(value) === JSON.stringify(this.presentState))
+            return;
+        
+        let cloneValue = JSON.parse(JSON.stringify(value));
+        this.pastStates.push(this.presentState);
+        this.presentState = cloneValue;
+    }
+
+    undoState() {
+        this.setState(this.presentState);
+        this.presentState = this.pastStates.pop();
+    }
+
     onAnswerClicked(answer, index) {
-        let { type } = this.state;
+        let { type, reactionAnswers } = this.state;
+
+        this.updateState(this.state);
 
         if (type == ChatType.REACTION) {
             this.onReactionList_AnswerClicked(answer, index);
@@ -103,7 +113,8 @@ export default class ChatScreen extends Component {
             })
         } else if (type == ChatType.CALIBRATESELECT) {
             this.onCalibrateSelectList_AnswerClicked(answer, index);
-            this.reactionAnswers.push(answer);
+            reactionAnswers.push(answer);
+            this.setState({reactionAnswers});
         } else if (type == ChatType.CALIBRATEFINISH) {
             this.onCalibrateFinish_AnswerClicked(answer, index);
         }
@@ -111,6 +122,8 @@ export default class ChatScreen extends Component {
     
     onNextClicked() {
         let { type } = this.state;
+
+        this.updateState(this.state);
 
         if (type == ChatType.FIRSTSORT) {
             this.onFirstSortList_NextClicked();
@@ -124,7 +137,14 @@ export default class ChatScreen extends Component {
     }
 
     onBtnBackClicked() {
-        this.props.navigation.navigate("Landing");
+        let { waiting } = this.state;
+
+        if (waiting == false) {
+            if (this.canUndo())
+                this.undoState()
+            else
+                this.props.navigation.navigate("Landing");
+        }
     }
 
     onBtnHamburgerClicked() {
@@ -142,7 +162,9 @@ export default class ChatScreen extends Component {
     onReactionList_AnswerClicked(answer, index) {
         let { messageData, answerData } = this.state;
 
-        this.firstAnswers = []
+        this.setState({
+            firstAnswers: []
+        });
 
         if (index == answerData.length - 1) {
             let firstState = {nextEnabled: false}
@@ -155,142 +177,102 @@ export default class ChatScreen extends Component {
                 answerData: [],
             }
             this.monkeyChat(firstState, messages, lastState);
-            // this.setState({
-            //     waiting: true,
-            //     nextEnabled: false
-            // });
-
-            // setTimeout(() => {
-            //     messageData.map(item => item.new = false);
-            //     messageData = [
-            //         { body: "Which of these most closely describes how you are feeling at the moment?", new: true },
-            //         ...messageData
-            //     ];
-            //     this.setState({
-            //         type: ChatType.ELSE,
-            //         count: 0,
-            //         messageData: messageData,
-            //         answerData: [],
-            //         waiting: false
-            //     })
-            // }, timeDelay)
         } else {
             messageData.map(item => item.new = false);
             messageData = [
-                { body: answer, new: true },
+                { body: answer, new: true, isUser: true },
                 ...messageData
             ]
-            this.setState({
-                messageData: messageData,
-                waiting: true,
-                nextEnabled: false
-            });
+            answerData = this.fullAlternatives.slice(0, 2);
 
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                messageData = [
-                    { body: "Choose one", new: true },
-                    { body: this.cycle[0].monkeyspeaks[0].monkeyText, new: true },
-                    { body: this.cycle[0].monkeyspeaks[0].title, new: true },
-                    ...messageData
-                ];
-                answerData = this.fullAlternatives.slice(0, 2);    
-                this.setState({
-                    type: ChatType.FIRSTSELECT,
-                    count: 0,
-                    messageData: messageData,
-                    answerData: answerData,
-                    waiting: false
-                })
-            }, timeDelay);
+            let firstState = {
+                messageData: messageData,
+                nextEnabled: false
+            }
+            let messages = [
+                this.cycle[0].monkeyspeaks[0].title,
+                this.cycle[0].monkeyspeaks[0].monkeyText,
+                "Choose one"
+            ]
+            let lastState = {
+                type: ChatType.FIRSTSELECT,
+                count: 0,
+                answerData: answerData,
+            }
+            this.monkeyChat(firstState, messages, lastState);
         }
     }
 
     onFirstSelectList_AnswerClicked(answer, index) {
-        let { step, count, messageData, answerData } = this.state;
+        let { step, count, messageData, answerData, firstAnswers } = this.state;
 
         if (count < 3) {
             messageData.map(item => item.new = false);
             messageData = [
-                { body: answer, new: true },
+                { body: answer, new: true, isUser: true },
                 ...messageData
             ]
-            this.firstAnswers.push({body: answer})
+            firstAnswers.push({body: answer})
+            let startIndex = 8 * step + 2 * count + 2;
+            let endIndex = 8 * step + 2 * count  + 4;
+            answerData = this.fullAlternatives.slice(startIndex, endIndex);
 
-            this.setState({
+            let firstState = {
                 count: count + 1,
                 messageData: messageData,
-                waiting: true,
-                nextEnabled: false
-            });
-
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                messageData = [
-                    { body: "Choose one", new: true },
-                    { body: this.cycle[step].monkeyspeaks[count + 1].monkeyText, new: true },
-                    { body: this.cycle[step].monkeyspeaks[count + 1].title, new: true },
-                    ...messageData
-                ];
-                let startIndex = 8 * step + 2 * count + 2;
-                let endIndex = 8 * step + 2 * count  + 4;
-                answerData = this.fullAlternatives.slice(startIndex, endIndex);
-                this.setState({
-                    messageData: messageData,
-                    answerData: answerData,
-                    waiting: false
-                })
-            }, timeDelay);
+                nextEnabled: false,
+                firstAnswers: firstAnswers
+            }
+            let messages = [
+                this.cycle[step].monkeyspeaks[count + 1].title,
+                this.cycle[step].monkeyspeaks[count + 1].monkeyText,
+                "Choose one"
+            ]
+            let lastState = {
+                answerData: answerData
+            }
+            this.monkeyChat(firstState, messages, lastState);
         } else {
             messageData.map(item => item.new = false);
             messageData = [
-                { body: answer, new: true },
+                { body: answer, new: true, isUser: true },
                 ...messageData
             ]
-            this.firstAnswers.push({body: answer})
+            firstAnswers.push({body: answer})
+            firstAnswers.map((item, index) => item.key = `item-${index}`);
 
-            this.setState({
+            let firstState = {
                 messageData: messageData,
-                waiting: true,
-                nextEnabled: false
-            });
-
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                messageData = [
-                    { body: this.sort[0].monkeyspeaks[0].monkeyText, new: true },
-                    ...messageData
-                ];
-                this.setState({
-                    type: ChatType.FIRSTSORT,
-                    count: 0,
-                    messageData: messageData,
-                    answerData: this.firstAnswers,
-                    waiting: false
-                })
-            }, timeDelay);
+                nextEnabled: false,
+                firstAnswers: firstAnswers
+            }
+            let messages = [
+                this.sort[0].monkeyspeaks[0].monkeyText
+            ]
+            let lastState = {
+                type: ChatType.FIRSTSORT,
+                count: 0,
+                answerData: firstAnswers,
+            }
+            this.monkeyChat(firstState, messages, lastState);
         }
     }
 
     onFirstSortList_AnswerClicked(answer, index) {
-        let { count, messageData } = this.state;
+        let { count } = this.state;
 
+        this.setState({answerData: answer});
         if (count < 3) {
-            this.setState({
-                count: count + 1,
-                waiting: true
-            });
-            setTimeout(() => {
-                messageData = [
-                    { body: this.sort[0].monkeyspeaks[count + 1].monkeyText, new: true },
-                    ...messageData
-                ];
-                this.setState({
-                    messageData: messageData,
-                    waiting: false,
-                    nextEnabled: count == 2
-                })
-            }, timeDelay);
+            let firstState = {
+                count: count + 1
+            }
+            let messages = [
+                this.sort[0].monkeyspeaks[count + 1].monkeyText
+            ]
+            let lastState = {
+                nextEnabled: count == 2
+            }
+            this.monkeyChat(firstState, messages, lastState);
         }
     }
 
@@ -320,83 +302,58 @@ export default class ChatScreen extends Component {
                 "Select the ones which come closest to describing how you are feeling right now";
             answerData = this.fullReactions;
         }
+        answerData.map(item => item.isSelected = false);
 
-        this.setState({
-            waiting: true,
+        let firstState = {
             nextEnabled: false,
             answerData: []
-        });
-
-        setTimeout(() => {
-            messageData.map(item => item.new = false);
-            messageData = [
-                { body: message, new: true},
-                ...messageData
-            ];
-            this.setState({
-                type: ChatType.ELSESELECT,
-                messageData: messageData,
-                answerData: answerData,
-                waiting: false,
-                nextEnabled: false
-            });
-        });
+        }
+        let messages = [
+            message
+        ]
+        let lastState = {
+            type: ChatType.ELSESELECT,
+            answerData: answerData,
+            nextEnabled: false
+        }
+        this.monkeyChat(firstState, messages, lastState);
     }
 
     onCalibrateSelectList_AnswerClicked(answer, index) {
-        let { messageData, count } = this.state;
+        let { count, reactionAnswers } = this.state;
 
         if (count < 2) {
-            this.setState({
-                waiting: true,
-                nextEnabled: false
-            });
-
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                messageData = [
-                    {
-                        body: this.calibrate[0].monkeyspeaks[count + 1].monkeyText,
-                        new: true
-                    },
-                    ...messageData
-                ];
-                this.setState({
-                    count: count + 1,
-                    waiting: false,
-                    messageData: messageData
-                })
-            }, timeDelay)
+            let firstState = {
+                nextEnabled: false,
+                count: count + 1
+            }
+            let messages = [
+                this.calibrate[0].monkeyspeaks[count + 1].monkeyText
+            ]
+            let lastState = {}
+            this.monkeyChat(firstState, messages, lastState);
         } else {
-            this.setState({
-                waiting: true,
+            let firstState = {
                 nextEnabled: false
-            });
-
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                messageData = [
-                    {
-                        body: this.calibrate[0].monkeyspeaks[count + 1].monkeyText,
-                        new: true
-                    },
-                    ...messageData
-                ];
-                this.setState({
-                    type: ChatType.CALIBRATEFINISH,
-                    count: 0,
-                    waiting: false,
-                    nextEnabled: true,
-                    messageData: messageData,
-                    answerData: this.reactionAnswers
-                });
-            }, timeDelay)
+            }
+            let messages = [
+                this.calibrate[0].monkeyspeaks[count + 1].monkeyText
+            ]
+            let lastState = {
+                type: ChatType.CALIBRATEFINISH,
+                count: 0,
+                nextEnabled: true,
+                answerData: reactionAnswers
+            }
+            this.monkeyChat(firstState, messages, lastState);
         }
     }
 
     onCalibrateFinish_AnswerClicked(answer, index) {
+        let { reactionAnswers } = this.state;
+
         ReactionAnswerList.data = [
-            ...this.reactionAnswers,
+            ...reactionAnswers,
             {
                 title: "SOMETHING ELSE"
             }
@@ -407,160 +364,131 @@ export default class ChatScreen extends Component {
     onFirstSortList_NextClicked() {
         let { step, messageData, answerData } = this.state;
 
-        this.firstAnswers = []
+        this.setState({
+            firstAnswers: []
+        });
+        answerData = this.fullAlternatives.slice(0, 2);
 
         if (step < maxStep - 1) {
-            this.setState({
+            let firstState = {
                 step: step + 1,
-                waiting: true,
                 nextEnabled: false
-            });
-
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                messageData = [
-                    { body: "Choose one", new: true },
-                    { body: this.cycle[step + 1].monkeyspeaks[0].monkeyText, new: true },
-                    { body: this.cycle[step + 1].monkeyspeaks[0].title, new: true },
-                    ...messageData
-                ];
-                answerData = this.fullAlternatives.slice(0, 2);    
-                this.setState({
-                    type: ChatType.FIRSTSELECT,
-                    count: 0,
-                    messageData: messageData,
-                    answerData: answerData,
-                    waiting: false
-                })
-            }, timeDelay);
+            }
+            let messages = [
+                this.cycle[step + 1].monkeyspeaks[0].title,
+                this.cycle[step + 1].monkeyspeaks[0].monkeyText,
+                "Choose one"
+            ]
+            let lastState = {
+                type: ChatType.FIRSTSELECT,
+                count: 0,
+                answerData: answerData,
+            }
+            this.monkeyChat(firstState, messages, lastState);
         } else {
-            this.setState({
+            this.setState({rates: []});
+
+            let firstState = {
                 step: 0,
-                waiting: true,
                 nextEnabled: true
-            })
-
-            this.rates = [];
-
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                messageData = [
-                    { body: "Use the gauge to tell me which viewpoint feels closer and which feels further away", new: true },
-                    { body: "Okay, how are you feeling now?", new: true },
-                    ...messageData
-                ];
-                this.setState({
-                    type: ChatType.RATE,
-                    count: 0,
-                    rate: 5,
-                    messageData: messageData,
-                    answerData: [],
-                    waiting: false
-                });
-            }, timeDelay)
+            }
+            let messages = [
+                "Okay, how are you feeling now?",
+                "Use the gauge to tell me which viewpoint feels closer and which feels further away"
+            ]
+            let lastState = {
+                type: ChatType.RATE,
+                count: 0,
+                rate: 5,
+                answerData: [],
+            }
+            this.monkeyChat(firstState, messages, lastState);
         }
     }
 
     onRate_NextClicked() {
-        let { count, messageData, rate } = this.state;
+        let { count, rate, rates } = this.state;
 
         if (count < 2) {
-            this.setState({
+            rates.push(rate)
+
+            let firstState = {
                 count: count + 1,
-                waiting: true
-            });
-
-            this.rates.push(rate)
-
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                if (count == 0) {
-                    messageData = [
-                        { body: "Which of these feels closer and which feels further away?", new: true },
-                        { body: "Got it", new: true },
-                        ...messageData
-                    ];  
-                } else if (count == 1) {
-                    messageData = [
-                        { body: "…and which of these feels closer and which feels further away?", new: true },
-                        ...messageData
-                    ];  
-                }
-                this.setState({
-                    type: ChatType.RATE,
-                    count: count + 1,
-                    rate: 5,
-                    messageData: messageData,
-                    answerData: [],
-                    waiting: false
-                });
-            }, timeDelay);
+                rates: rates
+            }
+            let messages = []
+            if (count == 0) {
+                messages = [
+                    "Got it",
+                    "Which of these feels closer and which feels further away?"
+                ];  
+            } else if (count == 1) {
+                messages = [
+                    "…and which of these feels closer and which feels further away?"
+                ];  
+            }
+            let lastState = {
+                type: ChatType.RATE,
+                count: count + 1,
+                rate: 5,
+                answerData: []
+            }
+            this.monkeyChat(firstState, messages, lastState);
         } else {
-            this.setState({
+            rates.push(rate);
+
+            let firstState = {
                 count: 0,
-                waiting: true
-            })
-
-            this.rates.push(rate);
-
-            setTimeout(() => {
-                messageData.map(item => item.new = false);
-                if (this.rates[0] < 5 || this.rates[1] < 5 || this.rates[2] < 5) {
-                    messageData = [
-                        { body: "Do you want to...", new: true },
-                        { body: "I can see you are still a little stressed and worried", new: true },
-                        ...messageData
-                    ];  
-                } else {
-                    messageData = [
-                        { body: "Do you want to...", new: true },
-                        { body: "Great! It looks like you are a lot more relaxed", new: true },
-                        ...messageData
-                    ];  
-                }
-                this.setState({
-                    type: ChatType.FINISH,
-                    messageData: messageData,
-                    answerData: [],
-                    waiting: false,
-                    nextEnabled: false
-                });
-            })
+                rates: rates
+            }
+            let messages = []
+            if (rates[0] < 5 || rates[1] < 5 || rates[2] < 5) {
+                messages = [
+                    "I can see you are still a little stressed and worried",
+                    "Do you want to..."
+                ];  
+            } else {
+                messages = [
+                    "Great! It looks like you are a lot more relaxed",
+                    "Do you want to..."
+                ];  
+            }
+            let lastState = {
+                type: ChatType.FINISH,
+                answerData: [],
+                nextEnabled: false
+            }
+            this.monkeyChat(firstState, messages, lastState);
         }
     }
 
     onElseSelectList_NextClicked() {
         let { messageData, answerData } = this.state;
 
-        this.setState({
-            waiting: true,
-            nextEnabled: false
-        });
-
         this.fullAlternatives = shuffle(Data.fullAlternatives.fullAlternatives);
+        answerData = this.fullAlternatives.slice(0, 2);
 
-        setTimeout(() => {
-            messageData.map(item => item.new = false);
-            messageData = [
-                { body: "Choose one", new: true },
-                { body: this.cycle[0].monkeyspeaks[0].monkeyText, new: true },
-                { body: this.cycle[0].monkeyspeaks[0].title, new: true },
-                ...messageData
-            ];
-            answerData = this.fullAlternatives.slice(0, 2);    
-            this.setState({
-                type: ChatType.FIRSTSELECT,
-                count: 0,
-                messageData: messageData,
-                answerData: answerData,
-                waiting: false
-            })
-        }, timeDelay);
+        let firstState = {
+            nextEnabled: false
+        }
+        let messages = [
+            this.cycle[0].monkeyspeaks[0].title,
+            this.cycle[0].monkeyspeaks[0].monkeyText,
+            "Choose one"
+        ]
+        let lastState = {
+            type: ChatType.FIRSTSELECT,
+            count: 0,
+            answerData: answerData
+        }
+        this.monkeyChat(firstState, messages, lastState);
     }
 
     onCalibrateFinish_NextClicked() {
+        let { reactionAnswers } = this.state;
+
         ReactionAnswerList.Data = [
-            ...this.reactionAnswers,
+            ...reactionAnswers,
             {
                 title: "SOMETHING ELSE"
             }
@@ -571,71 +499,62 @@ export default class ChatScreen extends Component {
     startChat() {
         let { messageData } = this.state;
 
-        this.setState({
-            waiting: true,
+        let firstState = {
             nextEnabled: false
-        });
-
-        setTimeout(() => {
-            messageData.map(item => item.new = false);
-            greetings.map(item => item.new = true);
-            messageData = [
-                ...greetings,
-                ...messageData
-            ];
-            this.setState({
-                type: ChatType.REACTION,
-                step: 0,
-                count: 0,
-                messageData: messageData,
-                answerData: ReactionAnswerList.data,
-                waiting: false,
-                nextEnabled: false
-            })
-        }, timeDelay)
+        }
+        let messages = greetings
+        let lastState = {
+            type: ChatType.REACTION,
+            step: 0,
+            count: 0,
+            answerData: ReactionAnswerList.data,
+            nextEnabled: false
+        }
+        this.monkeyChat(firstState, messages, lastState);
     }
 
     monkeyChat(firstState, monkeyMessages, lastState) {
-        let { messageData } = this.state;
-        
         firstState.waiting = true;
         this.setState(firstState);
 
         let i = 0;
         setTimeout(function run() {
+            let { messageData } = this.state;    
             messageData.map(item => item.new = false);
             messageData = [{body: monkeyMessages[i], new: true}, ...messageData]
             if (i < monkeyMessages.length - 1) {
                 this.setState({messageData});
                 i++
-                setTimeout(run, timeDelay);
+                setTimeout(run.bind(this), timeDelay);
             } else {
                 lastState.messageData = messageData;
+                lastState.waiting = false
                 this.setState(lastState);
             }
-        }, timeDelay);
+        }
+        .bind(this), timeDelay);
     }
 
     getAnswerView() {
         let { type, answerData, waiting, rate } = this.state;
         if (type == ChatType.REACTION) {
-            return <ReactionList answerData = {answerData} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
+            return <ReactionList answerData = {answerData} disabled = {waiting} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.FIRSTSELECT) {
             return <FirstSelectList answerData = {answerData} disabled = {waiting} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.FIRSTSORT) {
             return <FirstSortList answerData = {answerData} disabled = {waiting} onAnswerClicked={ this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.RATE) {
-            return <Rate value = { rate } onValueChange = { (value) => this.setState({rate: value}) } />
+            return <Rate disabled = {waiting} value = { rate } onValueChange = { (value) => this.setState({rate: value}) } />
         } else if (type == ChatType.FINISH) {
-            return <Finish onBtnMoreClicked = { this.onBtnMoreClicked.bind(this) } onBtnFinishClicked = { this.onBtnFinishClicked.bind(this) } />
+            return <Finish disabled = {waiting} onBtnMoreClicked = { this.onBtnMoreClicked.bind(this) } onBtnFinishClicked = { this.onBtnFinishClicked.bind(this) } />
         } else if (type == ChatType.ELSE) {
-            return <ElseList onAnswerClicked = { this.onAnswerClicked.bind(this) } />
+            return <ElseList disabled = {waiting} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.ELSESELECT) {
-            return <ElseSelectList answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
+            return <ElseSelectList disabled = {waiting} answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.CALIBRATESELECT) {
             return <CalibrateSelectList answerData = {answerData} disabled = {waiting} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
         } else if (type == ChatType.CALIBRATEFINISH) {
-            return <CalibrateFinish answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
+            return <CalibrateFinish disabled = {waiting} answerData = {answerData} onAnswerClicked = { this.onAnswerClicked.bind(this) } />
         }
     }
 

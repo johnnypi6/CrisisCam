@@ -13,12 +13,6 @@ export default class CalibrateFinish extends Component {
     constructor(props) {
         super(props);
 
-        let { answerData } = this.props;
-        this.state = {
-            answerData: answerData
-        };
-        answerData.map(item => item.isSelected = false);
-
         this.onAnswerClicked = this.onAnswerClicked.bind(this);
     }
 
@@ -27,7 +21,7 @@ export default class CalibrateFinish extends Component {
     }
 
     render() {
-        let { answerData } = this.state;
+        let { answerData, disabled } = this.props;
 
         let data = [
             ...answerData,
@@ -38,14 +32,14 @@ export default class CalibrateFinish extends Component {
         return (
             <View style = {styles.viewLower}>
                 <FlatList
-                    style = {styles.scroll}
+                    contentContainerStyle = {styles.scroll}
                     data = { data }
                     renderItem = {({ item, index }) => {
                         return (
                             index == count - 1
                             ?
                             (<View style = {styles.viewButton}>
-                                <TouchableOpacity style = {styles.wrapFinish} onPress = { () => this.onAnswerClicked() }>
+                                <TouchableOpacity style = {styles.wrapFinish} onPress = { () => this.onAnswerClicked() } disabled = {disabled}>
                                     <View style = {styles.viewFinish}>
                                         <Text style={styles.btnFinish}>FINISH</Text>
                                     </View>
@@ -53,8 +47,8 @@ export default class CalibrateFinish extends Component {
                             </View>)
                             :
                             (<View style = {styles.viewAnswerItem}>
-                                <TouchableOpacity style = { styles.touchAnswerItem } activeOpacity = { 0.6 }>
-                                    <ImageBackground source={ item.isSelected ? Images.answerBackground4Highlight : Images.answerBackground3 } 
+                                <TouchableOpacity style = { styles.touchAnswerItem } activeOpacity = { 0.6 } disabled = {disabled}>
+                                    <ImageBackground source={ Images.answerBackground3 } 
                                         style = {styles.imgAnswer} 
                                         borderRadius = {8}>
                                         <View style = {styles.viewAnswerMessage}>

@@ -26,7 +26,7 @@ export default class FirstSelectList extends Component {
 
         return (
             <View style = {styles.viewLower}>
-                <FlatList style = {styles.scroll}
+                <FlatList contentContainerStyle = {styles.scroll}
                     data = { answerData }
                     renderItem = {({ item }) => {
                         return (
