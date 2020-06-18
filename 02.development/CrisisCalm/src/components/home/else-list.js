@@ -8,29 +8,7 @@ import {
     Text
 } from "react-native";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Images } from 'res';
-
-const answerList = [
-    {
-        title: "FEAR",
-        body: "Freaking out, panic, scared, keyed up, crippling fear"
-    },
-    {
-        title: "STRESS",
-        body: "Tense, unable to relax, concerned, demotivated"
-    },
-    {
-        title: "WORRY",
-        body: "Avoiding, depressed, obsessing, worried about worrying"
-    },
-    {
-        title: "PREVENTION",
-        body: "Don’t want to go wrong, make sure, escape, on-guard, prevent something from happening"
-    },
-    {
-        title: "SHOW ME THE FULL LIST"
-    }
-]
+import { Images, Dimension } from 'res';
 
 export default class ElseList extends Component {
     onAnswerClicked(answer, index) {
@@ -38,12 +16,12 @@ export default class ElseList extends Component {
     }
 
     render() {
-        let { disabled } = this.props;
+        let { disabled, answerData } = this.props;
         return (
             <View style = {styles.viewLower}>
                 <FlatList
                     contentContainerStyle = {styles.scroll}
-                    data = { answerList }
+                    data = { answerData }
                     renderItem = {({ item, index }) => {
                         return (
                             <View style = {styles.viewAnswerItem}>
@@ -75,15 +53,15 @@ const styles = StyleSheet.create({
         flex: 7
     },
     scroll: {
-        paddingTop: 24,
+        paddingTop: 8,
         paddingLeft: 40,
         paddingRight: 40,
-        paddingBottom: 16
+        paddingBottom: 8
     },
     viewAnswerItem: {
         flex: 1,
         marginTop: 8,
-        height: 110,
+        height: Dimension.cardHeight - 20,
         borderRadius: 8,
     },
     imgAnswer: {
@@ -93,7 +71,7 @@ const styles = StyleSheet.create({
     },
     viewAnswerMessage: {
         flex: 7,
-        padding: 16
+        padding: Dimension.cardPadding
     },
     viewNextButton: {
         flex: 4,
@@ -101,12 +79,12 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     txtTitle: {
-        fontSize: 14,
+        fontSize: Dimension.titleFontSize,
         color: "#293F81"
     },
     txtBody: {
-        fontSize: 12,
-        marginTop: 4,
+        fontSize: Dimension.bodyFontSize,
+        marginTop: 2,
         color: "#293F81"
     }
 });

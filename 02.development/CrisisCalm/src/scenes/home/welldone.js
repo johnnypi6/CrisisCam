@@ -18,9 +18,7 @@ let messages = [
 export default class WellDoneScreen extends Component {
     constructor(props) {
         super(props);
-
-console.log(this.props);
-
+        
         this.onBtnBetterTapped = this.onBtnBetterTapped.bind(this);
         this.onBtnNotGreatTapped = this.onBtnNotGreatTapped.bind(this);
     }
@@ -40,7 +38,7 @@ console.log(this.props);
             <View style={styles.container}>
                 <ImageBackground source={ Images.doneBackground } style={styles.background}>
                     <View style = {styles.viewUpper}>
-                        <Text style = {styles.txtWellDone}>Well done,{"\n"}Mark</Text>
+                        <Text style = {styles.txtWellDone}>Well done</Text>
                         <Text style = {styles.txtDash}>—</Text>
                         <Text style = {styles.txtWellDoneDesc}>
                             { messages[0] }
@@ -94,18 +92,16 @@ const styles = StyleSheet.create({
     },
     txtWellDone: {
         color: "#2E54C5",
-        fontSize: 36,
-        lineHeight: 44,
+        fontSize: 30,
         textAlign: "center"
     },
     txtDash: {
         color: "#2E54C5",
-        fontSize: 18
+        fontSize: 12
     },      
     txtWellDoneDesc: {
         color: "#4C4C4C",
-        fontSize: 21,
-        lineHeight: 28,
+        fontSize: 18,
         textAlign: "center"
     },
     viewButton: {

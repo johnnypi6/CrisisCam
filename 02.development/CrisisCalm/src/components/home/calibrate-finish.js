@@ -7,7 +7,7 @@ import {
     Text,
     TouchableOpacity
 } from "react-native";
-import { Images } from 'res';
+import { Images, Dimension } from 'res';
 
 export default class CalibrateFinish extends Component {
     constructor(props) {
@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
         flex: 7
     },
     scroll: {
-        paddingTop: 24,
+        paddingTop: 8,
         paddingLeft: 40,
         paddingRight: 40,
-        paddingBottom: 16
+        paddingBottom: 8
     },
     touchAnswerItem: {
         flex: 1
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     viewAnswerItem: {
         flex: 1,
         marginTop: 8,
-        height: 90,
+        height: Dimension.cardHeight - 20,
         borderRadius: 8,
     },
     imgAnswer: {
@@ -93,15 +93,15 @@ const styles = StyleSheet.create({
     },
     viewAnswerMessage: {
         flex: 7,
-        padding: 16
+        padding: Dimension.cardPadding
     },
     txtTitle: {
-        fontSize: 14,
+        fontSize: Dimension.titleFontSize,
         color: "#293F81"
     },
     txtBody: {
-        fontSize: 12,
-        marginTop: 4,
+        fontSize: Dimension.bodyFontSize,
+        marginTop: 2,
         color: "#293F81"
     },
     viewButton: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 40
+        marginTop: 30
     },
     wrapFinish: {
         width: 225,

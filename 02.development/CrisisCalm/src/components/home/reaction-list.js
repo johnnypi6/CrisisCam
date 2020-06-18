@@ -9,7 +9,7 @@ import {
     Text
 } from "react-native";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Images } from 'res';
+import { Images, Dimension } from 'res';
 
 export default class ReactionList extends Component {
     constructor(props) {
@@ -28,7 +28,6 @@ export default class ReactionList extends Component {
         return (
             <View style = {styles.viewLower}>
                 <ScrollView contentContainerStyle = {styles.scroll}>
-                    <Text style = {styles.txtComment}>TOP SELECTED REACTION</Text>
                     <FlatList
                         scrollEnabled = { false }
                         data = { answerData }
@@ -66,8 +65,8 @@ const styles = StyleSheet.create({
     scroll: {
         paddingLeft: 40,
         paddingRight: 40,
-        paddingTop: 24,
-        paddingBottom: 16
+        paddingTop: 8,
+        paddingBottom: 8
     },
     txtComment: {
         color: "#5C5C5C"
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     viewAnswerItem: {
         flex: 1,
         marginTop: 8,
-        height: 110,
+        height: Dimension.cardHeight,
         borderRadius: 8,
     },
     imgAnswer: {
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
     },
     viewAnswerMessage: {
         flex: 7,
-        padding: 16
+        padding: Dimension.cardPadding
     },
     viewNextButton: {
         flex: 4,
@@ -94,12 +93,12 @@ const styles = StyleSheet.create({
         // backgroundColor: "blue"
     },
     txtTitle: {
-        fontSize: 14,
+        fontSize: Dimension.titleFontSize,
         color: "#293F81"
     },
     txtBody: {
-        fontSize: 12,
-        marginTop: 4,
+        fontSize: Dimension.bodyFontSize,
+        marginTop: 2,
         color: "#293F81"
     }
 });

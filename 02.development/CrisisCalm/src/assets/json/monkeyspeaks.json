@@ -4,7 +4,7 @@
             "monkeyspeaks" : [
                 {
                     "id" : 1,
-                    "title" : "I'll help you calm down",
+                    "title" : "I'll help you to calm down",
                     "monkeyText" : "Which option looks like more attractive?"
                 },
                 {
@@ -29,7 +29,7 @@
             "monkeyspeaks" : [
                 {
                     "id" : 1,
-                    "title" : "Now I'll help you calm down",
+                    "title" : "Now I'll help you to calm down",
                     "monkeyText" : "Which feels more doable?"
                 },
                 {
@@ -54,7 +54,7 @@
             "monkeyspeaks" : [
                 {
                     "id" : 1,
-                    "title" : "I'll help you see what is okay in the present",
+                    "title" : "I'll help you to see what is okay in the present",
                     "monkeyText" : "Which speaks to you the most?"
                 },
                 {

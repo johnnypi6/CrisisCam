@@ -11,7 +11,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Loader from 'react-native-three-dots-loader'
 
-import { Images } from 'res';
+import { Images, Dimension } from 'res';
 
 export default class ChatHistory extends Component {
     constructor(props) {
@@ -162,10 +162,10 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     txtChatItem: {
-        fontSize: 14
+        fontSize: Dimension.monkeyFontSize
     },
     txtChatOldItem: {
-        fontSize: 14,
+        fontSize: Dimension.monkeyFontSize,
         opacity: 0.5
     },
     viewLoaderWrapper: {
