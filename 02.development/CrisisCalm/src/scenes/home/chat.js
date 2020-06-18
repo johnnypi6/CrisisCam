@@ -23,7 +23,7 @@ import { ChatType } from 'utils/enum';
 import ReactionAnswerList from 'utils/reaction-answer-list';
 import { Images, Data } from 'res';
 
-const maxStep = 2;
+const maxStep = 4;
 const timeDelay = 1000;
 
 const greetings = [
