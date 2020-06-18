@@ -41,7 +41,7 @@ export default class Rate extends Component {
     }
 
     render() {
-        let { value, disabled } = this.props;
+        let { value, disabled, answerData } = this.props;
 
         const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -50,7 +50,7 @@ export default class Rate extends Component {
                 <ImageBackground style = {styles.background} source = {Images.rateBackground} >
                     <View style = {styles.viewUp}>
                         <Text style = {styles.txtUp}>
-                            I'm noticing what is OK in the current scene
+                            {answerData}
                         </Text>
                     </View>
                     <View style = {styles.viewSlider}>
@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         resizeMode: "cover",
-        paddingTop: 24,
+        paddingTop: 8,
         paddingLeft: 40,
         paddingRight: 40,
-        paddingBottom: 16
+        paddingBottom: 8
     },
     viewUp: {
         flex: 1,

@@ -9,7 +9,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DraggableFlatList from "react-native-draggable-flatlist";
 
-import { Images } from 'res';
+import { Images, Dimension } from 'res';
 
 export default class FirstSortList extends Component {
     constructor(props) {
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
         flex: 7
     },
     scroll: {
-        paddingTop: 24,
-        paddingBottom: 16
+        paddingTop: 8,
+        paddingBottom: 8
     },
     txtComment: {
         color: "#5C5C5C"
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     viewAnswerItem: {
         flex: 1,
         marginTop: 8,
-        height: 110,
+        height: Dimension.cardHeight,
         borderRadius: 8,
         paddingLeft: 40,
         paddingRight: 40
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     },
     viewAnswerMessage: {
         flex: 7,
-        padding: 16
+        padding: Dimension.cardPadding
     },
     viewNextButton: {
         flex: 4,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         alignItems: "stretch"
     },
     txtBody: {
-        fontSize: 12,
+        fontSize: Dimension.bodyUppercaseFontSize,
         marginTop: 4,
         color: "#293F81",
         textTransform: "uppercase",
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         lineHeight: 15
     },
     touchBody: {
-        height: 110, 
+        height: Dimension.cardHeight, 
         flex: 0, 
         justifyContent: "center", 
         alignItems: "center"

@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     txtIntro: {
-        fontSize: 36,
+        fontSize: 30,
         letterSpacing: 1.4,
         textAlign: "center",
         color: "#2E4484"
