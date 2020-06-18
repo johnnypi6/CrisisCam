@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     View,
+    BackHandler,
     ScrollView
 } from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -96,8 +97,17 @@ export default class ChatScreen extends Component {
 
         this.onNextClicked = this.onNextClicked.bind(this);
         this.monkeyChat = this.monkeyChat.bind(this);
+        this.onBackPress = this.onBackPress.bind(this);
     }
     
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+
     canUndo() {
         return this.pastStates.length > 0;
     }
@@ -167,6 +177,19 @@ export default class ChatScreen extends Component {
             else
                 this.props.navigation.navigate("Landing");
         }
+    }
+
+    onBackPress() {
+        let { waiting } = this.state;
+
+        if (waiting == false) {
+            if (this.canUndo())
+                this.undoState()
+            else
+                this.props.navigation.navigate("Landing");
+        }
+
+        return true
     }
 
     onBtnHamburgerClicked() {
@@ -272,6 +295,7 @@ export default class ChatScreen extends Component {
 
             let firstState = {
                 messageData: messageData,
+                answerData: [],
                 nextEnabled: false,
                 firstAnswers: firstAnswers
             }
