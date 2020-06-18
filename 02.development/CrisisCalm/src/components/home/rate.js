@@ -50,7 +50,7 @@ export default class Rate extends Component {
                 <ImageBackground style = {styles.background} source = {Images.rateBackground} >
                     <View style = {styles.viewUp}>
                         <Text style = {styles.txtUp}>
-                            {answerData}
+                            {answerData.up}
                         </Text>
                     </View>
                     <View style = {styles.viewSlider}>
@@ -68,7 +68,7 @@ export default class Rate extends Component {
                     </View>
                     <View style = {styles.viewDown}>
                         <Text style = {styles.txtDown}>
-                            Unable to relax even though I know I should
+                            {answerData.down}
                         </Text>
                     </View>
                 </ImageBackground>

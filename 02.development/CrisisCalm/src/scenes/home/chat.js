@@ -463,7 +463,10 @@ export default class ChatScreen extends Component {
                 "Okay, how are you feeling now?",
                 "Use the gauge to tell me which viewpoint feels closer and which feels further away"
             ];
-            answerData = "I’M NOTICING WHAT IS OK IN THE CURRENT SCENE";
+            answerData = {
+                up: "I’M NOTICING WHAT IS OK IN THE CURRENT SCENE",
+                down: "UNABLE TO RELAX EVEN THOUGH I KNOW I SHOULD"
+            };
             let lastState = {
                 type: ChatType.RATE,
                 count: 0,
@@ -492,12 +495,18 @@ export default class ChatScreen extends Component {
                     "Got it",
                     "Which of these feels closer and which feels further away?"
                 ];
-                answerData = "I PRETTY MUCH RELAX AND GO WITH THE FLOW AS LONG AS THINGS ARE FINE";
+                answerData = {
+                    up: "I PRETTY MUCH RELAX AND GO WITH THE FLOW AS LONG AS THINGS ARE FINE",
+                    down: "SCARING MYSELF ABOUT THINGS GOING WRONG"
+                };
             } else if (count == 1) {
                 messages = [
                     "…and which of these feels closer and which feels further away?"
                 ];
-                answerData = "THINKING ABOUT WHAT WOULD BE THE RIGHT OR PROPER WAY TO PROCEED"
+                answerData = {
+                    up: "THINKING ABOUT WHAT WOULD BE THE RIGHT OR PROPER WAY TO PROCEED",
+                    down: "CAUGHT UP IN INAPPROPRIATE CRIPPLING FEAR"
+                };
             }
             let lastState = {
                 type: ChatType.RATE,
